@@ -1,5 +1,7 @@
 StudentsMap
 
+https://docs.google.com/document/d/18bCx4XmYkkPgOJrxARv9gAAZXsn9DYkmuPOJgpist0E/edit
+
 Воспользуемся Api google карт. 
 
 Функционал приложения:
