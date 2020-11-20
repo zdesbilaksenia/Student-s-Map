@@ -15,13 +15,14 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         app:itemBackground="@color/white"
+        app:itemIconSize="30dp"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/black"
-        app:itemIconSize="30dp"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bottom_navigation" />
 
 </RelativeLayout>
