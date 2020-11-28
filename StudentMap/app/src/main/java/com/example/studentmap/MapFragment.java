@@ -59,6 +59,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         Task<Location> task = client.getLastLocation();
+        mMapView.getMapAsync(MapFragment.this);
             task.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
@@ -73,8 +74,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        //LatLng latLng = new LatLng(55.751244, 37.618423);
+        //LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        LatLng latLng = new LatLng(55.751244, 37.618423);
         MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         googleMap.addMarker(options);
