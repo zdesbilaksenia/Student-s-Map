@@ -9,13 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class JsonParser {
-    private HashMap<String, String> parseJsonObject(JSONObject object) throws JSONException {
+    private HashMap<String, String> parseJsonObject(JSONObject object) {
         HashMap<String, String> dataList = new HashMap<>();
         try {
             String name = object.getString("name");
             String latitude = object.getJSONObject("geometry")
+                    .getJSONObject("location").getString("lat");
+            String longitude = object.getJSONObject("geometry")
                     .getJSONObject("location").getString("lng");
-            String longitude = object.getJSONObject("geometry").getJSONObject("location").getString("lng");
             dataList.put("name", name);
             dataList.put("lat", latitude);
             dataList.put("lng", longitude);

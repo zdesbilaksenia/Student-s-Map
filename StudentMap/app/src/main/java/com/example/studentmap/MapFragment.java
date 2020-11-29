@@ -51,6 +51,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     FusedLocationProviderClient client;
     Location currentLocation;
 
+    public MapFragment() {
+        currentLocation = new Location("");
+        currentLocation.setLatitude(55.751244);
+        currentLocation.setLongitude(37.618423);
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,10 +79,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 int i = spType.getSelectedItemPosition();
-                String url = "https://maps.googleapies.com/maps/api/place/nearbysearch/json" + "?location=" + currentLocation + "&radius=5000" +
-                        "&types=" + placeTypeList[i] + "&sensor=true" + "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
+                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
+                        "?location=" + currentLocation.getLatitude() + "," + currentLocation.getLongitude() +
+                        "&radius=2000" + "&type=" + placeTypeList[i] + "&sensor=true" +
+                        "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
 
-                new PlaseTask().execute(url);
+                new PlaceTask().execute(url);
             }
         });
         return rootView;
@@ -99,21 +107,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         Task<Location> task = client.getLastLocation();
         mMapView.getMapAsync(MapFragment.this);
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if (location != null){
-                        currentLocation = location;
-                        mMapView.getMapAsync(MapFragment.this);
-                    }
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null){
+                    currentLocation = location;
+                    mMapView.getMapAsync(MapFragment.this);
                 }
-            });
+            }
+        });
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        map = googleMap;
         LatLng latLng = new LatLng(55.751244, 37.618423);
         MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
@@ -179,7 +188,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMapView.onLowMemory();
     }
 
-    private class PlaseTask extends AsyncTask<String, Integer, String> {
+    private class PlaceTask extends AsyncTask<String, Integer, String> {
         @Override
         protected String doInBackground(String... strings) {
             String data = null;
