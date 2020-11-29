@@ -11,53 +11,42 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MapViewModel extends AndroidViewModel {
+    private MutableLiveData<List<Place>> liveData;
 
-    FusedLocationProviderClient client;
-    Location currentLocation;
+    String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
+            "?location=55.751244,37.618423" +
+            "&radius=2000" + "&type=atm" + "&sensor=true" +
+            "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
+
+    public LiveData<List<Place>> getData(){
+        if (liveData == null) {
+            liveData = new MutableLiveData<>();
+            loadData();
+        }
+        return liveData;
+    }
+
+    private void loadData(){
+        List<Place> places = new ArrayList<>();
+        for (int i =0; i < 10; i ++) {
+            Place pl = new Place();
+            pl.setLatitude(55+i*0.02);
+            pl.setLongitude(37+i*0.02);
+            pl.setName("Check");
+            places.add(pl);
+        }
+        liveData.postValue(places);
+    }
 
     public MapViewModel(@NonNull Application application) {
         super(application);
     }
-
-    public void getCurrentLocation(MapView mapView) {
-        Context context = getApplication();
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-            return;
-        }
-        client = LocationServices.getFusedLocationProviderClient(context);
-        Task<Location> task = client.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-                }
-                mapView.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        //LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                        LatLng latLng = new LatLng(55.751244, 37.618423);
-                        MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-                        googleMap.addMarker(options);
-                    }
-                });
-            }
-        });
-    }
-
 }

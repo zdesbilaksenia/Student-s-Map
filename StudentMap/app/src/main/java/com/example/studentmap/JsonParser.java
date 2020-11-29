@@ -1,21 +1,34 @@
 package com.example.studentmap;
 
+import android.os.AsyncTask;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class JsonParser {
-    private HashMap<String, String> parseJsonObject(JSONObject object) throws JSONException {
+
+    private HashMap<String, String> parseJsonObject(JSONObject object) {
         HashMap<String, String> dataList = new HashMap<>();
         try {
             String name = object.getString("name");
             String latitude = object.getJSONObject("geometry")
+                    .getJSONObject("location").getString("lat");
+            String longitude = object.getJSONObject("geometry")
                     .getJSONObject("location").getString("lng");
-            String longitude = object.getJSONObject("geometry").getJSONObject("location").getString("lng");
             dataList.put("name", name);
             dataList.put("lat", latitude);
             dataList.put("lng", longitude);
@@ -47,4 +60,6 @@ public class JsonParser {
         }
         return parseJsonArray(jsonArray);
     }
+
+
 }
