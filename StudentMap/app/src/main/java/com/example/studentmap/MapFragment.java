@@ -17,6 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,20 +46,22 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment{
     private MapView mMapView;
-    private GoogleMap map;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private MapViewModel mapViewModel;
 
-    FusedLocationProviderClient client;
-    Location currentLocation;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map, container, false);
         mMapView = rootView.findViewById(R.id.mapView);
-        initGoogleMap(savedInstanceState);
+        initGoogleMap();
+        mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
+
+
 
         Spinner spType;
         Button btnFind;
@@ -67,13 +72,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         String[] placeTypeList = {"atm", "bank", "hospital", "movie_theater", "restaurant"};
         String[] placeNameList = {"ATM", "Bank", "Hospital", "Movie Theater", "Restaurant"};
 
-        spType.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, placeNameList));
+        spType.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, placeNameList));
 
         btnFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = spType.getSelectedItemPosition();
-                String url = "https://maps.googleapies.com/maps/api/place/nearbysearch/json" + "?location=" + currentLocation + "&radius=5000" +
+                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" + "?location=55.751244,37.618423"  + "&radius=5000" +
                         "&types=" + placeTypeList[i] + "&sensor=true" + "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
 
                 new PlaseTask().execute(url);
@@ -82,42 +87,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return rootView;
     }
 
-    private void initGoogleMap(Bundle savedInstanceState) {
-        Bundle mapViewBundle = null;
-        if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+
+    public void initGoogleMap() {
+        if (mMapView != null) {
+            mMapView.onCreate(new Bundle());
+            mapViewModel.getCurrentLocation(mMapView);
         }
-        mMapView.onCreate(mapViewBundle);
-        getCurrentLocation();
-    }
-
-    public void getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-            return;
-        }
-        client = LocationServices.getFusedLocationProviderClient(getActivity());
-        Task<Location> task = client.getLastLocation();
-        mMapView.getMapAsync(MapFragment.this);
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if (location != null){
-                        currentLocation = location;
-                        mMapView.getMapAsync(MapFragment.this);
-                    }
-                }
-            });
-    }
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        //LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        LatLng latLng = new LatLng(55.751244, 37.618423);
-        MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-        googleMap.addMarker(options);
     }
 
     @Override
@@ -125,7 +100,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         switch (requestCode) {
             case 101:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    getCurrentLocation();
+                    mapViewModel.getCurrentLocation(mMapView);
                 }
                 break;
         }
@@ -229,7 +204,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             return mapList;
         }
 
-        @Override
+        /*@Override
         protected void onPostExecute(List<HashMap<String, String>> hashMaps) {
             map.clear();
             for (int i = 0; i < hashMaps.size(); i++) {
@@ -243,6 +218,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 options.title(name);
                 map.addMarker(options);
             }
-        }
+        }*/
     }
 }
