@@ -20,6 +20,7 @@ import java.util.List;
 
 public class MapViewModel extends AndroidViewModel {
     private MutableLiveData<List<Place>> liveData;
+    List<Place> places = new ArrayList<>();
 
     String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
             "?location=55.751244,37.618423" +
@@ -35,15 +36,9 @@ public class MapViewModel extends AndroidViewModel {
     }
 
     private void loadData(){
-        List<Place> places = new ArrayList<>();
-        for (int i =0; i < 10; i ++) {
-            Place pl = new Place();
-            pl.setLatitude(55+i*0.02);
-            pl.setLongitude(37+i*0.02);
-            pl.setName("Check");
-            places.add(pl);
-        }
-        liveData.postValue(places);
+        ParsePlace parser = new ParsePlace();
+        parser.Parse();
+        liveData = (MutableLiveData<List<Place>>) parser.getData();
     }
 
     public MapViewModel(@NonNull Application application) {

@@ -64,24 +64,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         spType = rootView.findViewById(R.id.sp_type);
         btnFind = rootView.findViewById(R.id.btn_find);
 
-        String[] placeTypeList = {"atm", "bank", "hospital", "movie_theater", "restaurant"};
+
         String[] placeNameList = {"ATM", "Bank", "Hospital", "Movie Theater", "Restaurant"};
 
         spType.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, placeNameList));
+
+        mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
+        LiveData<List<Place>> data = mapViewModel.getData();
 
         btnFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = spType.getSelectedItemPosition();
-                url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-                        "?location=" + currentLocation.getLatitude() + "," + currentLocation.getLongitude() +
-                        "&radius=2000" + "&type=" + placeTypeList[i] + "&sensor=true" +
-                        "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
             }
         });
 
-        mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
-        LiveData<List<Place>> data = mapViewModel.getData();
         data.observe(getActivity(), new Observer<List<Place>>() {
             @Override
             public void onChanged(List<Place> places) {
@@ -195,6 +192,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+
 
 
 }
