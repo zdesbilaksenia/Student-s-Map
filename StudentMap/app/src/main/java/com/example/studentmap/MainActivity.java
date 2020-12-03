@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
 
-        MapFragment mapFragment = new MapFragment();
+       /* MapFragment mapFragment = new MapFragment();
         lastFragment = mapFragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.mapFragmentContainer, mapFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment).commit();*/
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
@@ -37,26 +37,25 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             int itemId = item.getItemId();
-            if (itemId == lastItemId) {
-                return true;
-            }
             switch (itemId) {
                 case R.id.fragment2:
                     //getSupportFragmentManager().popBackStack();
-                    getSupportFragmentManager().beginTransaction().remove(lastFragment).commit();
-                    MapFragment mapFragment = new MapFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mapFragmentContainer, mapFragment).commit();
-                    lastItemId = itemId;
-                    lastFragment = mapFragment;
+                    getSupportFragmentManager().beginTransaction();
+                    if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
+                        MapFragment mapFragment = new MapFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
+                    }
+                    //lastItemId = itemId;
+                    //lastFragment = mapFragment;
                     return true;
 
                 case R.id.fragment1:
                     //getSupportFragmentManager().popBackStack();
-                    getSupportFragmentManager().beginTransaction().remove(lastFragment).commit();
+                    getSupportFragmentManager().beginTransaction();
                     ListFragment listFragment = new ListFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentContainer, listFragment).commit();
-                    lastItemId = itemId;
-                    lastFragment = listFragment;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, listFragment).commit();
+                    //lastItemId = itemId;
+                    //lastFragment = listFragment;
                     return true;
             }
 

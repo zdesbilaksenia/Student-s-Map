@@ -21,25 +21,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class ParsePlace {
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-    private MutableLiveData<List<Place>> listPlaces;
 
-    String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-            "?location=55.761244,37.628423"+
-            "&radius=2000" + "&type=atm" + "&sensor=true" +
-            "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
+    private ResponseCallback callback;
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    public ParsePlace(ResponseCallback callback){
+        this.callback = callback;
+    }
+
     final String[] finalData = new String[1];
 
-    LiveData<List<Place>> getData(){
-        if(listPlaces== null){
-            listPlaces = new MutableLiveData<>();
-        }
-        return listPlaces;
-    }
-    public void Parse() {
+    public void Parse(String url) {
         executor.submit(new Runnable() {
             @Override
             public void run() {
+                List<Place> listPlace = new ArrayList<>();
                 String dataUrl = null;
                 try {
                     dataUrl = downloadUrl(url);
@@ -59,8 +55,6 @@ public class ParsePlace {
                     e.printStackTrace();
                 }
 
-
-                List<Place> places = new ArrayList<>();
                 for (int i = 0; i < mapList.size(); i++) {
                     HashMap<String, String> hashMapList = mapList.get(i);
                     Place temp = new Place();
@@ -70,9 +64,9 @@ public class ParsePlace {
                     temp.setIcon(hashMapList.get("icon"));
                     temp.setRating(Double.parseDouble(hashMapList.get("rating")));
                     temp.setVicinity(hashMapList.get("vicinity"));
-                    places.add(temp);
+                    listPlace.add(temp);
                 }
-                listPlaces.postValue(places);
+                callback.response(listPlace);
             }
         });
         executor.shutdown();
