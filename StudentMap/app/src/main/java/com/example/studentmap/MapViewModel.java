@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapViewModel extends AndroidViewModel {
+public class MapViewModel extends AndroidViewModel implements ResponseCallback{
     private MutableLiveData<List<Place>> liveData;
+    private List<Place> listPlace = new ArrayList<>();
+    String url;
 
     public LiveData<List<Place>> getData(){
         if (liveData == null) {
@@ -29,13 +31,22 @@ public class MapViewModel extends AndroidViewModel {
         return liveData;
     }
 
+    public void setUrl(String url){
+        this.url = url;
+    }
     private void loadData(){
-        ParsePlace parser = new ParsePlace();
-        parser.Parse();
-        liveData = (MutableLiveData<List<Place>>) parser.getData();
+        ParsePlace parser = new ParsePlace(this);
+        parser.Parse(url);
     }
 
     public MapViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    @Override
+    public void response(List<Place> placeList) {
+        this.listPlace = placeList;
+        liveData.postValue(listPlace);
+
     }
 }

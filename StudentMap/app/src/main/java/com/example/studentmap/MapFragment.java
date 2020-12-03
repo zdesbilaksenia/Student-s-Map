@@ -37,17 +37,20 @@ import com.google.android.gms.tasks.Task;
 import java.util.List;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, ResponseCallback {
+    public MapFragment(){
+        currentLocation = new Location("");
+        currentLocation.setLatitude(55.751244);
+        currentLocation.setLongitude(37.618423);
+    }
     private MapView mMapView;
     private GoogleMap map;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     FusedLocationProviderClient client;
     Location currentLocation;
-    public MapFragment() {
-        currentLocation = new Location("");
-        currentLocation.setLatitude(55.751244);
-        currentLocation.setLongitude(37.618423);
-    };
+
+    String url;
+
 
     MapViewModel mapViewModel;
 
@@ -58,6 +61,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMapView = rootView.findViewById(R.id.mapView);
         initGoogleMap(savedInstanceState);
 
+
+
         Spinner spType;
         Button btnFind;
 
@@ -65,17 +70,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         btnFind = rootView.findViewById(R.id.btn_find);
 
 
+        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
+                "?location=" + currentLocation.getLatitude()+","+currentLocation.getLongitude()+
+                "&radius=2000" + "&language=ru"+"&type=cafe" + "&sensor=true" +
+                "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
+
+
         String[] placeNameList = {"ATM", "Bank", "Hospital", "Movie Theater", "Restaurant"};
 
         spType.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, placeNameList));
 
+
+
+
         mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
+        if (url!=null) {
+            mapViewModel.setUrl(url);
+        }
+
         LiveData<List<Place>> data = mapViewModel.getData();
 
         btnFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = spType.getSelectedItemPosition();
+
             }
         });
 
@@ -111,14 +130,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         Task<Location> task = client.getLastLocation();
-        mMapView.getMapAsync(MapFragment.this);
+        //mMapView.getMapAsync(MapFragment.this);
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null){
                     currentLocation = location;
-                    mMapView.getMapAsync(MapFragment.this);
                 }
+                mMapView.getMapAsync(MapFragment.this);
             }
         });
     }
@@ -126,9 +145,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         map = googleMap;
-        LatLng latLng = new LatLng(55.751244, 37.618423);
+        //LatLng latLng = new LatLng(55.751244, 37.618423);
         MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
@@ -194,4 +213,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMapView.onLowMemory();
     }
 
+    @Override
+    public void response(List<Place> placeList) {
+
+    }
 }

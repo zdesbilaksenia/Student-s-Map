@@ -1,6 +1,5 @@
 package com.example.studentmap;
 
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+//import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -94,7 +94,7 @@ public class ListFragment extends Fragment {
             }
 
             public void bind(Place place) {
-                Picasso.get().load(place.getIcon()).into(image);
+                //Picasso.get().load(place.getIcon()).into(image);
                 name.setText(place.getName());
                 address.setText(place.getVicinity());
                 distance.setText("distance");
