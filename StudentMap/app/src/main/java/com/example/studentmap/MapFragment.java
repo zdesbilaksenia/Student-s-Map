@@ -1,4 +1,3 @@
-
 package com.example.studentmap;
 
 import android.Manifest;
@@ -28,6 +27,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,7 +41,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private MapView mMapView;
     private GoogleMap map;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
-    String url;
     FusedLocationProviderClient client;
     Location currentLocation;
     public MapFragment() {
@@ -131,6 +131,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         LatLng latLng = new LatLng(55.751244, 37.618423);
         MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         googleMap.addMarker(options);
     }
 
@@ -192,7 +193,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-
-
 
 }

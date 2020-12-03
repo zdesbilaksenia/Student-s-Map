@@ -67,6 +67,9 @@ public class ParsePlace {
                     temp.setLatitude(Double.parseDouble(hashMapList.get("lat")));
                     temp.setLongitude(Double.parseDouble(hashMapList.get("lng")));
                     temp.setName(hashMapList.get("name"));
+                    temp.setIcon(hashMapList.get("icon"));
+                    temp.setRating(Double.parseDouble(hashMapList.get("rating")));
+                    temp.setVicinity(hashMapList.get("vicinity"));
                     places.add(temp);
                 }
                 listPlaces.postValue(places);
@@ -85,7 +88,7 @@ public class ParsePlace {
         StringBuilder builder = new StringBuilder();
         String line = "";
         while ((line = reader.readLine()) != null) {
-        builder.append(line);
+            builder.append(line);
         }
         String data = builder.toString();
         reader.close();
