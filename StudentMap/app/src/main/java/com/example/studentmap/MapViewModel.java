@@ -20,12 +20,6 @@ import java.util.List;
 
 public class MapViewModel extends AndroidViewModel {
     private MutableLiveData<List<Place>> liveData;
-    List<Place> places = new ArrayList<>();
-
-    String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-            "?location=55.751244,37.618423" +
-            "&radius=2000" + "&type=atm" + "&sensor=true" +
-            "&key=" + "AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
 
     public LiveData<List<Place>> getData(){
         if (liveData == null) {

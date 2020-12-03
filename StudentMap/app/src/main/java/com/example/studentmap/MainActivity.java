@@ -17,27 +17,50 @@ import com.yandex.mapkit.mapview.MapView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int lastItemId = R.id.fragment2;
+    Fragment lastFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
 
+        MapFragment mapFragment = new MapFragment();
+        lastFragment = mapFragment;
+        getSupportFragmentManager().beginTransaction().replace(R.id.mapFragmentContainer, mapFragment).commit();
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
 
-    BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
+            int itemId = item.getItemId();
+            if (itemId == lastItemId) {
+                return true;
+            }
+            switch (itemId) {
                 case R.id.fragment2:
+                    //getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().remove(lastFragment).commit();
                     MapFragment mapFragment = new MapFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.mapFragmentContainer, mapFragment).commit();
+                    lastItemId = itemId;
+                    lastFragment = mapFragment;
+                    return true;
+
+                case R.id.fragment1:
+                    //getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().remove(lastFragment).commit();
+                    ListFragment listFragment = new ListFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentContainer, listFragment).commit();
+                    lastItemId = itemId;
+                    lastFragment = listFragment;
                     return true;
             }
+
             return false;
         }
     };
-
-
 }

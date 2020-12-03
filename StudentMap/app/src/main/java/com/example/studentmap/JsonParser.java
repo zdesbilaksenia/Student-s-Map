@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.common.util.concurrent.ForwardingBlockingQueue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,9 +30,19 @@ public class JsonParser {
                     .getJSONObject("location").getString("lat");
             String longitude = object.getJSONObject("geometry")
                     .getJSONObject("location").getString("lng");
+            String rating = "0";
+            if (object.has("rating")) {
+                rating = object.getString("rating");
+                dataList.put("rating", rating);
+            }
+            String icon = object.getString("icon");
+            String vicinity = object.getString("vicinity");
             dataList.put("name", name);
             dataList.put("lat", latitude);
             dataList.put("lng", longitude);
+            dataList.put("rating", rating);
+            dataList.put("icon", icon);
+            dataList.put("vicinity", vicinity);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -63,3 +74,4 @@ public class JsonParser {
 
 
 }
+
