@@ -1,4 +1,4 @@
-package com.example.room.DAO;
+package com.example.studentmap.RoomDb.DAO;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
