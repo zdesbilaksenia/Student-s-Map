@@ -1,5 +1,6 @@
 package com.example.studentmap;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -94,14 +95,16 @@ public class ListFragment extends Fragment {
             }
 
             public void bind(Place place) {
-                //Picasso.get().load(place.getIcon()).into(image);
+                Picasso.get().load(place.getIcon()).into(image);
                 name.setText(place.getName());
                 address.setText(place.getVicinity());
-                distance.setText("distance");
+                Location temp = new Location("");
+                temp.setLongitude(place.getLongitude());
+                temp.setLatitude(place.getLatitude());
+                distance.setText(String.valueOf((double)(Math.ceil (temp.distanceTo(mapViewModel.getCurrentLocation()) / 100)) / 10) +"км");
                 ratingBar.setRating((float) place.getRating());
                 rating.setText(String.valueOf(place.getRating()));
             }
         }
     }
 }
-

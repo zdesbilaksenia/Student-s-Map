@@ -21,10 +21,12 @@ import java.util.List;
 public class MapViewModel extends AndroidViewModel implements ResponseCallback{
     private MutableLiveData<List<Place>> liveData;
     private List<Place> listPlace = new ArrayList<>();
-    String url;
+    private Location currentLocation;
+    private String url;
+    private String lastUrl;
 
     public LiveData<List<Place>> getData(){
-        if (liveData == null) {
+        if (liveData == null || lastUrl != url) {
             liveData = new MutableLiveData<>();
             loadData();
         }
@@ -32,8 +34,22 @@ public class MapViewModel extends AndroidViewModel implements ResponseCallback{
     }
 
     public void setUrl(String url){
+        lastUrl = this.url;
         this.url = url;
     }
+
+    public Location getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(Location location){
+        currentLocation = location;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     private void loadData(){
         ParsePlace parser = new ParsePlace(this);
         parser.Parse(url);
