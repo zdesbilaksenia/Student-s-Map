@@ -1,12 +1,12 @@
-package com.example.room.Repository;
+package com.example.studentmap.RoomDb.Repository;
 
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.room.DAO.UserDao;
+import com.example.studentmap.RoomDb.DAO.UserDao;
 import com.example.room.Entity.User;
-import com.example.room.MyRoomDatabase;
+import com.example.studentmap.RoomDb.MyRoomDatabase;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

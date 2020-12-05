@@ -1,4 +1,4 @@
-package com.example.room;
+package com.example.studentmap.RoomDb;
 
 import android.app.Application;
 
@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.room.Entity.User;
-import com.example.room.Repository.UserRepository;
+import com.example.studentmap.RoomDb.Repository.UserRepository;
 
 import java.util.List;
 
