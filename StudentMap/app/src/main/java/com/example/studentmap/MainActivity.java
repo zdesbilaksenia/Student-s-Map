@@ -3,10 +3,13 @@ package com.example.studentmap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.studentmap.Fragments.PostMakerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
+
+
+
 
     final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -59,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
                     //lastItemId = itemId;
                     //lastFragment = listFragment;
                     return true;
+
+                case R.id.fragment3:
+                    PostMakerFragment postMakerFragment = new PostMakerFragment();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.fragmentContainer,postMakerFragment);
+                    ft.commit();
+                    return true;
+
             }
 
             return false;

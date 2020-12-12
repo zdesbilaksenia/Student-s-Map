@@ -1,4 +1,4 @@
-package com.example.room.Entity;
+package com.example.studentmap.RoomDb.Entity;
 
 
 import androidx.annotation.NonNull;

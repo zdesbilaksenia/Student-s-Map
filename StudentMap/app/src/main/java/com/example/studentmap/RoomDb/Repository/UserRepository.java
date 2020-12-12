@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.studentmap.RoomDb.DAO.UserDao;
-import com.example.room.Entity.User;
+import com.example.studentmap.RoomDb.Entity.User;
 import com.example.studentmap.RoomDb.MyRoomDatabase;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.workwithapi;
+package com.example.studentmap.Network;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.example.workwithapi.Entity;
+package com.example.studentmap.Network.Entity;
 
 public class Post {
 

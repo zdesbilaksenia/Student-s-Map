@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.room.Entity.User;
+import com.example.studentmap.RoomDb.Entity.User;
 
 import java.util.List;
 

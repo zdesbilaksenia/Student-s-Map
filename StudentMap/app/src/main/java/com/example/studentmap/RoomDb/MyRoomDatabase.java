@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.studentmap.RoomDb.DAO.UserDao;
-import com.example.room.Entity.User;
+import com.example.studentmap.RoomDb.Entity.User;
 
 @Database(entities = {User.class}, version = 1, exportSchema = false)
 public abstract class MyRoomDatabase extends RoomDatabase {

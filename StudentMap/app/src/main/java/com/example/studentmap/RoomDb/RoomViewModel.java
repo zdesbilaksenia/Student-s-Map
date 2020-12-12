@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.room.Entity.User;
+import com.example.studentmap.RoomDb.Entity.User;
 import com.example.studentmap.RoomDb.Repository.UserRepository;
 
 import java.util.List;

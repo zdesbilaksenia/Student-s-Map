@@ -1,10 +1,10 @@
-package com.example.workwithapi;
+package com.example.studentmap.Network;
 
 import android.util.Log;
 
-import com.example.workwithapi.Entity.Place;
-import com.example.workwithapi.Entity.Post;
-import com.example.workwithapi.Entity.User;
+import com.example.studentmap.Network.Entity.Place;
+import com.example.studentmap.Network.Entity.Post;
+import com.example.studentmap.Network.Entity.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

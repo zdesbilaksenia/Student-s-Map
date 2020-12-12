@@ -1,4 +1,4 @@
-package com.example.workwithapi;
+package com.example.studentmap.Network;
 
 import android.util.Log;
 
@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.workwithapi.Entity.Place;
-import com.example.workwithapi.Entity.Post;
-import com.example.workwithapi.Entity.User;
+import com.example.studentmap.Network.Entity.Place;
+import com.example.studentmap.Network.Entity.Post;
+import com.example.studentmap.Network.Entity.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +50,7 @@ public class RequestMakerModel extends ViewModel {
     }
     // -------------------------------------- LiveData for Post-------------------------------------------------
 
-    LiveData<Integer> getDataInt(){
+    public LiveData<Integer> getDataInt(){
         if(liveDataInt == null){
             liveDataInt = new MutableLiveData<>();
         }
@@ -373,7 +373,7 @@ public class RequestMakerModel extends ViewModel {
     }
 
     //Добавить новый пост
-    void addPost(OkHttpClient client1, final Post post){
+    public void addPost(OkHttpClient client1, final Post post){
         client = client1;
 
         service.submit(new Runnable() {
