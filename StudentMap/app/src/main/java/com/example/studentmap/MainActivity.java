@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
 
-       /* MapFragment mapFragment = new MapFragment();
+        MapFragment mapFragment = new MapFragment();
         lastFragment = mapFragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment).commit();*/
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment).commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
