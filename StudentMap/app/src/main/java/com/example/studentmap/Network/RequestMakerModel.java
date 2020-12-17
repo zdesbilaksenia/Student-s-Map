@@ -36,7 +36,7 @@ public class RequestMakerModel extends ViewModel {
 
 
    // -------------------------------------- LiveData for User-------------------------------------------------
-    LiveData<User> getUserData(){
+   public LiveData<User> getUserData(){
         if(liveDataUser == null){
             liveDataUser = new MutableLiveData<>();
         }
@@ -57,7 +57,7 @@ public class RequestMakerModel extends ViewModel {
         return liveDataInt;
     }
 
-    LiveData<ArrayList<Post>> getAllPosts(){
+   public LiveData<ArrayList<Post>> getAllPosts(){
         if(liveDataAllPosts == null){
             liveDataAllPosts = new MutableLiveData<>();
         }
@@ -168,7 +168,7 @@ public class RequestMakerModel extends ViewModel {
         });
     }
 
-    void GetUserByLoginAndPassword(OkHttpClient client1 , final String login, final String password){
+   public void GetUserByLoginAndPassword(OkHttpClient client1 , final String login, final String password){
         client = client1;
         userHelp = new User();
 
@@ -196,6 +196,10 @@ public class RequestMakerModel extends ViewModel {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }else {
+                        userHelp.setName(response_text);
+                        liveDataUser.postValue(userHelp);
+                        Log.e("RequestMaker", "User not found");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -206,7 +210,7 @@ public class RequestMakerModel extends ViewModel {
     }
 
 
-    void addUser(OkHttpClient client1, final User user){
+    public void addUser(OkHttpClient client1, final User user){
         client = client1;
 
         service.submit(new Runnable() {
@@ -221,7 +225,7 @@ public class RequestMakerModel extends ViewModel {
                         Log.d("AddUserPost", "well");
                         liveDataInt.postValue(1);
 
-                    }
+                    }else liveDataInt.postValue(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -280,7 +284,7 @@ public class RequestMakerModel extends ViewModel {
     }
 
     // Получить все посты имеющиеся в БД
-    void GetAllPosts(OkHttpClient client1){
+    public void GetAllPosts(OkHttpClient client1){
         client = client1;
         final ArrayList<Post> posts = new ArrayList<>();
 

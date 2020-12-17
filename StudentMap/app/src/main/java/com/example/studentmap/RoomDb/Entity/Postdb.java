@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "post_table")
-public class Post {
+public class Postdb {
     @PrimaryKey
     @NonNull
     // имя поста

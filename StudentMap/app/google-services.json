@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "556155748442",
+    "project_id": "studantsmap",
+    "storage_bucket": "studantsmap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556155748442:android:dbcea1d61eab58fe89d863",
+        "android_client_info": {
+          "package_name": "com.example.studentmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556155748442-a8opd6uc71tpgr25le3r8avmod4ikplk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.studentmap",
+            "certificate_hash": "e7b38dbabcaccf01a3a9fd2aaa9f0fde2ac446bc"
+          }
+        },
+        {
+          "client_id": "556155748442-33kl3shvolmfikq9f20ev90ml5s479nn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnLKT9pOOkw4HwupIMWjBKERcCaOpH0OE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556155748442-33kl3shvolmfikq9f20ev90ml5s479nn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
