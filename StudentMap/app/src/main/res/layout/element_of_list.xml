@@ -26,7 +26,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             tools:text="Place" />
 
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
+            android:textSize="12sp"
             android:textStyle="normal"
             tools:text="address" />
 
@@ -44,20 +44,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:textStyle="normal"
             tools:text="distance" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:gravity="start"
             android:orientation="horizontal">
 
             <RatingBar
                 android:id="@+id/ratingBar"
-                style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+                style="@android:style/Widget.Material.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

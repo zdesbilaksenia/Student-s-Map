@@ -3,10 +3,13 @@ package com.example.studentmap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
+//import com.example.studentmap.Fragments.PostMakerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -26,12 +29,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         MapFragment mapFragment = new MapFragment();
-        lastFragment = mapFragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment).commit();
+        //   lastFragment = mapFragment;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
+
+
+
 
     final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             switch (itemId) {
                 case R.id.fragment2:
                     //getSupportFragmentManager().popBackStack();
-                    getSupportFragmentManager().beginTransaction();
+                    //getSupportFragmentManager().beginTransaction();
                     if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
                         MapFragment mapFragment = new MapFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
@@ -51,12 +57,22 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.fragment1:
                     //getSupportFragmentManager().popBackStack();
-                    getSupportFragmentManager().beginTransaction();
-                    ListFragment listFragment = new ListFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, listFragment).commit();
+                    //getSupportFragmentManager().beginTransaction();
+                    if (getSupportFragmentManager().findFragmentByTag("ListFragment") == null) {
+                        ListFragment listFragment = new ListFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, listFragment, "ListFragment").commit();
+                    }
                     //lastItemId = itemId;
                     //lastFragment = listFragment;
                     return true;
+
+                case R.id.fragment3:
+                    if (getSupportFragmentManager().findFragmentByTag("FeedFragment") == null) {
+                        FeedListFragment feedListFragment = new FeedListFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, feedListFragment, "FeedFragment").commit();
+                    }
+                    return true;
+
             }
 
             return false;
