@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +20,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.studentmap.Network.Entity.Post;
 import com.example.studentmap.Network.RequestMakerModel;
-import com.example.studentmap.RoomDb.Entity.Post;
 
 import java.util.ArrayList;
 
@@ -35,24 +38,21 @@ public class FeedListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.feed, container, false);
         RecyclerView recyclerView = rootView.findViewById(R.id.feed_recycler);
         RequestMakerModel model = new ViewModelProvider(this).get(RequestMakerModel.class);
-        //LiveData<ArrayList<com.example.studentmap.Network.Entity.Post>> data = model.getAllPosts();
+        LiveData<ArrayList<Post>> data = model.getAllPosts();
         OkHttpClient client = new OkHttpClient();
         model.GetAllPosts(client);
 
-        /*data.observe(getViewLifecycleOwner(), new Observer<ArrayList<com.example.studentmap.Network.Entity.Post>>() {
+        data.observe(getViewLifecycleOwner(), new Observer<ArrayList<com.example.studentmap.Network.Entity.Post>>() {
             @Override
             public void onChanged(ArrayList<Post> posts) {
                 postList.addAll(posts);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                feedAdapter adapter = new feedAdapter(postList);
+                recyclerView.setAdapter(adapter);
             }
-        });*/
+        });
 
-        for (int i = 0; i < 10; i++){
-            Post post = new Post();
-            postList.add(post);
-        }
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        feedAdapter adapter = new feedAdapter(postList);
-        recyclerView.setAdapter(adapter);
+
         return rootView;
     }
 
@@ -74,6 +74,9 @@ public class FeedListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull feedViewHolder holder, int position) {
             Post post = mData.get(position);
+            holder.userName.setText(post.getName());
+            holder.review.setText(post.getText());
+            Glide.with(getContext()).load(post.getImg()).into(holder.photo);
         }
 
         @Override
@@ -84,9 +87,19 @@ public class FeedListFragment extends Fragment {
 
     public class feedViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout post;
+        public ImageView avatar;
+        public TextView userName;
+        public TextView place;
+        public ImageView photo;
+        public TextView review;
         public feedViewHolder(@NonNull View itemView) {
             super(itemView);
             post = itemView.findViewById(R.id.postContainer);
+            avatar = itemView.findViewById(R.id.avatar);
+            userName = itemView.findViewById(R.id.user_name);
+            place = itemView.findViewById(R.id.place);
+            photo = itemView.findViewById(R.id.photo);
+            review = itemView.findViewById(R.id.review);
         }
     }
 }

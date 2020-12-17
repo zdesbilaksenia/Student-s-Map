@@ -35,8 +35,8 @@ public class RequestMakerModel extends ViewModel {
     OkHttpClient client;
 
 
-   // -------------------------------------- LiveData for User-------------------------------------------------
-    LiveData<User> getUserData(){
+    // -------------------------------------- LiveData for User-------------------------------------------------
+    public LiveData<User> getUserData(){
         if(liveDataUser == null){
             liveDataUser = new MutableLiveData<>();
         }
@@ -129,9 +129,9 @@ public class RequestMakerModel extends ViewModel {
     }
 
 
-      User userHelp;
+    User userHelp;
 
-      void GetUserByLogin(OkHttpClient client1 ,final String login){
+    void GetUserByLogin(OkHttpClient client1 ,final String login){
         client = client1;
         userHelp = new User();
 
@@ -168,7 +168,7 @@ public class RequestMakerModel extends ViewModel {
         });
     }
 
-    void GetUserByLoginAndPassword(OkHttpClient client1 , final String login, final String password){
+    public void GetUserByLoginAndPassword(OkHttpClient client1 , final String login, final String password){
         client = client1;
         userHelp = new User();
 
@@ -196,6 +196,10 @@ public class RequestMakerModel extends ViewModel {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }else {
+                        userHelp.setName(response_text);
+                        liveDataUser.postValue(userHelp);
+                        Log.e("RequestMaker", "User not found");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -206,7 +210,7 @@ public class RequestMakerModel extends ViewModel {
     }
 
 
-    void addUser(OkHttpClient client1, final User user){
+    public void addUser(OkHttpClient client1, final User user){
         client = client1;
 
         service.submit(new Runnable() {
@@ -221,7 +225,7 @@ public class RequestMakerModel extends ViewModel {
                         Log.d("AddUserPost", "well");
                         liveDataInt.postValue(1);
 
-                    }
+                    }else liveDataInt.postValue(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

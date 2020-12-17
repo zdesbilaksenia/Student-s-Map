@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-//import com.example.studentmap.Fragments.PostMakerFragment;
+
+import com.example.studentmap.Fragments.PostMakerFragment;
+import com.example.studentmap.Fragments.EnterFragment;
+import com.example.studentmap.Fragments.PostMakerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -71,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
                         FeedListFragment feedListFragment = new FeedListFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, feedListFragment, "FeedFragment").commit();
                     }
+                    return true;
+
+                case R.id.fragment4:
+                    EnterFragment enterFragment = new EnterFragment();
+                    FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+                    ft1.addToBackStack(null);
+                    ft1.replace(R.id.fragmentContainer,enterFragment);
+                    ft1.commit();
                     return true;
 
             }

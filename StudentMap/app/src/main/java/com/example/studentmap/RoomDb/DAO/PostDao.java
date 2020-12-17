@@ -9,7 +9,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.studentmap.RoomDb.Entity.Post;
+
+import com.example.studentmap.RoomDb.Entity.Postdb;
 import com.example.studentmap.RoomDb.Entity.User;
 
 import java.lang.invoke.ConstantCallSite;
@@ -19,22 +20,22 @@ import java.util.List;
 public interface PostDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Post post);
+    void insert(Postdb post);
 
     @Delete
-    void delete(Post delete);
+    void delete(Postdb delete);
 
     @Update
-    void update(Post update);
+    void update(Postdb update);
 
     @Query("DELETE FROM post_table")
     void deleteAll();
 
     @Query("SELECT * FROM post_table")
-    LiveData<List<Post>> getAllPosts();
+    LiveData<List<Postdb>> getAllPosts();
 
 
     @Query("SELECT * FROM post_table WHERE location  =:location")
-    LiveData<List<Post>> getAllPostsByLocation(String location);
+    LiveData<List<Postdb>> getAllPostsByLocation(String location);
 
 }
