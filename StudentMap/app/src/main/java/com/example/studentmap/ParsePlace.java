@@ -1,5 +1,7 @@
 package com.example.studentmap;
 
+import android.location.Location;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -31,7 +33,7 @@ public class ParsePlace {
 
     final String[] finalData = new String[1];
 
-    public void Parse(String url) {
+    public void Parse(String url, Location location) {
         executor.submit(new Runnable() {
             @Override
             public void run() {
@@ -48,6 +50,7 @@ public class ParsePlace {
                 JsonParser jsonParser = new JsonParser();
                 List<HashMap<String, String>> mapList = null;
                 JSONObject object = null;
+
                 try {
                     object = new JSONObject(finalData[0]);
                     mapList = jsonParser.parseResult(object);
@@ -64,7 +67,39 @@ public class ParsePlace {
                     temp.setIcon(hashMapList.get("icon"));
                     temp.setRating(Double.parseDouble(hashMapList.get("rating")));
                     temp.setVicinity(hashMapList.get("vicinity"));
+
+                    if (hashMapList.get("photo") != null) {
+                        temp.setPhoto(hashMapList.get("photo"));
+                    }
+
+                    String urlDistance = "https://maps.googleapis.com/maps/api/distancematrix/json?" +
+                            "units=metric&origins=" + location.getLatitude() + "," + location.getLongitude() +
+                            "&destinations=" + temp.getLatitude() + "," + temp.getLongitude() +
+                            "&mode=walking&sensor=true&key=AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
+                    String distanceUrl = null;
+                    try {
+                        distanceUrl = downloadUrl(urlDistance);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    finalData[0] = distanceUrl;
+
+                    JsonParser jsonParserDist = new JsonParser();
+                    List<HashMap<String, String>> mapListDist = null;
+                    JSONObject dist = null;
+                    try {
+                        dist = new JSONObject(finalData[0]);
+                        mapListDist = jsonParserDist.parseResultDist(dist);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    temp.setDistance(mapListDist.get(0).get("distance"));
+
+
                     listPlace.add(temp);
+
                 }
                 callback.response(listPlace);
             }

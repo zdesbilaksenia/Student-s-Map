@@ -52,7 +52,7 @@ public class MapViewModel extends AndroidViewModel implements ResponseCallback{
 
     private void loadData(){
         ParsePlace parser = new ParsePlace(this);
-        parser.Parse(url);
+        parser.Parse(url, currentLocation);
     }
 
     public MapViewModel(@NonNull Application application) {

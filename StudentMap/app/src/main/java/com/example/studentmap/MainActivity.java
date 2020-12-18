@@ -23,16 +23,12 @@ import com.yandex.mapkit.mapview.MapView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int lastItemId = R.id.fragment2;
-    Fragment lastFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
 
         MapFragment mapFragment = new MapFragment();
-        //   lastFragment = mapFragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
@@ -48,25 +44,17 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             switch (itemId) {
                 case R.id.fragment2:
-                    //getSupportFragmentManager().popBackStack();
-                    //getSupportFragmentManager().beginTransaction();
                     if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
                         MapFragment mapFragment = new MapFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
                     }
-                    //lastItemId = itemId;
-                    //lastFragment = mapFragment;
                     return true;
 
                 case R.id.fragment1:
-                    //getSupportFragmentManager().popBackStack();
-                    //getSupportFragmentManager().beginTransaction();
                     if (getSupportFragmentManager().findFragmentByTag("ListFragment") == null) {
                         ListFragment listFragment = new ListFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, listFragment, "ListFragment").commit();
                     }
-                    //lastItemId = itemId;
-                    //lastFragment = listFragment;
                     return true;
 
                 case R.id.fragment3:
@@ -77,11 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.fragment4:
-                    EnterFragment enterFragment = new EnterFragment();
-                    FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-                    ft1.addToBackStack(null);
-                    ft1.replace(R.id.fragmentContainer,enterFragment);
-                    ft1.commit();
+                    if (getSupportFragmentManager().findFragmentByTag("Login") == null) {
+                    Login login = new Login();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, login, "LoginFragment").commit();
+                    }
                     return true;
 
             }
