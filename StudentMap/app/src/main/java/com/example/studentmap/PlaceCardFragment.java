@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -11,16 +12,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.studentmap.Fragments.PostMakerFragment;
 import com.squareup.picasso.Picasso;
 
 public class PlaceCardFragment extends Fragment {
+    Button addPostButton;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.place,
                 container, false);
 
+        addPostButton = view.findViewById(R.id.btn_post);
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostMakerFragment postMakerFragment = new PostMakerFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragmentContainer,postMakerFragment);
+                ft.commit();
+            }
+        });
         ImageView image = view.findViewById(R.id.image);
         TextView name = view.findViewById(R.id.name);
         TextView address = view.findViewById(R.id.address);
@@ -39,6 +56,10 @@ public class PlaceCardFragment extends Fragment {
         } else {
             Picasso.get().load(place.getIcon()).into(image);
         }
+
+
+
+
 
         return view;
     }

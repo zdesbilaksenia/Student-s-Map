@@ -1,11 +1,16 @@
 package com.example.studentmap;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,19 +32,30 @@ public class Registration extends Fragment {
     OkHttpClient client;
     TextInputEditText newLogin;
     TextInputEditText newPassword;
+    TextInputEditText nameRegistration;
+    TextInputEditText surnameRegistration;
+    TextInputEditText ageRegistration;
+    RadioGroup radioGroup;
     Button enterBtn;
     Button registrationBtn;
+
+
+
+    SharedPreferences myPreferences;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.registration,
                 container, false);
-
         newLogin = view.findViewById(R.id.new_login);
         newPassword = view.findViewById(R.id.new_password);
         enterBtn = view.findViewById(R.id.btn_to_enter);
         registrationBtn = view.findViewById(R.id.btn_registration);
+        nameRegistration = view.findViewById(R.id.name_registration);
+        surnameRegistration = view.findViewById(R.id.surname_registration);
+        ageRegistration = view.findViewById(R.id.age_registration);
+        radioGroup = view.findViewById(R.id.radioGroup);
 
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +72,15 @@ public class Registration extends Fragment {
                 User user = new User();
                 user.setLogin(newLogin.getText().toString());
                 user.setPassword(newPassword.getText().toString());
+                user.setName(nameRegistration.getText().toString());
+                user.setSurname(surnameRegistration.getText().toString());
+                user.setAge(Integer.parseInt(ageRegistration.getText().toString()));
+                int radioButtonID = radioGroup.getCheckedRadioButtonId();
+                View radioButton = radioGroup.findViewById(radioButtonID);
+                int index = radioGroup.indexOfChild(radioButton);
+                RadioButton radioBtn = (RadioButton) radioGroup.getChildAt(index);
+                String selectedGender = radioBtn.getText().toString();
+                user.setGender(selectedGender);
                 registration(user);
             }
         });
@@ -74,11 +99,22 @@ public class Registration extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 if(integer == 1){
-                    // Переходим на карту.
+
+                    SharedPreferences.Editor editor = myPreferences.edit();
+                    editor.putString("mysettings","1");
+                    editor.apply();
+                    close();
                 }else Toast.makeText(getContext(), "Ошибка создания учетной записи!!!", Toast.LENGTH_SHORT).show();
                 Log.d("Answer", Integer.toString(integer));
             }
         });
+
+    }
+
+
+    void close(){
+        startActivity(new Intent(getActivity(),MainActivity.class));
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 
     }
 }

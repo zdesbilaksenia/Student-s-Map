@@ -1,5 +1,8 @@
 package com.example.studentmap;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +32,7 @@ public class Login extends Fragment {
     TextInputEditText password;
     Button enterBtn;
     Button registrBtn;
+    SharedPreferences myPreferences;
 
     @Nullable
     @Override
@@ -40,6 +44,7 @@ public class Login extends Fragment {
         password = view.findViewById(R.id.password);
         enterBtn = view.findViewById(R.id.btn_enter);
         registrBtn = view.findViewById(R.id.btn_registr);
+        myPreferences = getActivity().getSharedPreferences("mysettings", Context.MODE_PRIVATE);
 
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,20 +94,29 @@ public class Login extends Fragment {
                     String gender = userFromServer.getGender();
                     Log.d("Ready", user.getName());
 
-//                        SharedPreferences myPreferences = getActivity().getSharedPreferences("mysettings", Context.MODE_PRIVATE);
-//
-//
-//                        // Сохраняем факт входа пользователя
-//                        SharedPreferences.Editor editor = myPreferences.edit();
-//                        editor.putInt("mysettings",1);
-//                        editor.apply();
 
-                    // выводим эти данные куда-нибудь в поле о пользователе
+
+
+                        // Сохраняем факт входа пользователя
+                        SharedPreferences.Editor editor = myPreferences.edit();
+                        editor.putString("mysettings","1");
+                        editor.apply();
+                        close();
+
+
+
+
+
 
                 }
 
             }
         });
+
+    }
+    void close(){
+        startActivity(new Intent(getActivity(),MainActivity.class));
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 
     }
 
