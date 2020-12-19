@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.studentmap.Fragments.PostMakerFragment;
+import com.example.studentmap.Place;
+import com.example.studentmap.R;
 import com.squareup.picasso.Picasso;
 
 public class PlaceCardFragment extends Fragment {
@@ -28,16 +30,7 @@ public class PlaceCardFragment extends Fragment {
                 container, false);
 
         addPostButton = view.findViewById(R.id.btn_post);
-        addPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PostMakerFragment postMakerFragment = new PostMakerFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-                ft.replace(R.id.fragmentContainer,postMakerFragment);
-                ft.commit();
-            }
-        });
+
         ImageView image = view.findViewById(R.id.image);
         TextView name = view.findViewById(R.id.name);
         TextView address = view.findViewById(R.id.address);
@@ -56,6 +49,21 @@ public class PlaceCardFragment extends Fragment {
         } else {
             Picasso.get().load(place.getIcon()).into(image);
         }
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostMakerFragment postMakerFragment = new PostMakerFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("address",place.getVicinity());
+                bundle.putString("name", place.getName());
+                postMakerFragment.setArguments(bundle);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragmentContainer,postMakerFragment);
+                ft.commit();
+            }
+        });
 
 
 

@@ -3,26 +3,19 @@ package com.example.studentmap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 
-import com.example.studentmap.Fragments.PostMakerFragment;
-import com.example.studentmap.Fragments.EnterFragment;
-import com.example.studentmap.Fragments.PostMakerFragment;
+import com.example.studentmap.Fragments.FeedListFragment;
+import com.example.studentmap.Fragments.ListFragment;
+import com.example.studentmap.Fragments.Login;
+import com.example.studentmap.Fragments.MapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.yandex.mapkit.Animation;
-import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.geometry.Point;
-import com.yandex.mapkit.map.CameraPosition;
-
-import com.yandex.mapkit.mapview.MapView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         myPreferences = getSharedPreferences("mysettings", Context.MODE_PRIVATE);
 
 
-            if(myPreferences.getString("mysettings","0") == "0"){
+            if(myPreferences.getString("auth","0") == "0"){
                 Log.d("Pref","IN");
 
                 if (getSupportFragmentManager().findFragmentByTag("Login") == null) {

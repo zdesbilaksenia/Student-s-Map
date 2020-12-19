@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +18,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.studentmap.Fragments.Registration;
+import com.example.studentmap.MainActivity;
 import com.example.studentmap.Network.Entity.User;
 import com.example.studentmap.Network.RequestMakerModel;
+import com.example.studentmap.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import okhttp3.OkHttpClient;
@@ -51,7 +54,7 @@ public class Login extends Fragment {
             public void onClick(View v) {
                 String Login = login.getText().toString();
                 String Password = password.getText().toString();
-                if(count <= 2){
+                if(count <= 4){
                     getUser(Login, Password);
                 }else{
                     Toast.makeText(getContext(), "Зарегистрируйтесь!!!", Toast.LENGTH_SHORT).show();
@@ -87,11 +90,14 @@ public class Login extends Fragment {
                     Toast.makeText(getContext(), "Учетная запись не найдена!!!", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    User userFromServer = new User();
-                    String name = userFromServer.getName();
-                    String surname = userFromServer.getSurname();
-                    Integer age = userFromServer.getAge();
-                    String gender = userFromServer.getGender();
+
+                    String name = user.getName();
+                    String surname = user.getSurname();
+                    Integer age = user.getAge();
+                    String gender = user.getGender();
+                    String login = user.getLogin();
+
+
                     Log.d("Ready", user.getName());
 
 
@@ -99,7 +105,11 @@ public class Login extends Fragment {
 
                         // Сохраняем факт входа пользователя
                         SharedPreferences.Editor editor = myPreferences.edit();
-                        editor.putString("mysettings","1");
+                        editor.putString("auth","1");
+                        editor.putString("login", login);
+                        editor.putString("name", name);
+                        editor.putString("surname", surname);
+                        editor.putString("age", Integer.toString(age));
                         editor.apply();
                         close();
 
@@ -115,7 +125,7 @@ public class Login extends Fragment {
 
     }
     void close(){
-        startActivity(new Intent(getActivity(),MainActivity.class));
+        startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 
     }

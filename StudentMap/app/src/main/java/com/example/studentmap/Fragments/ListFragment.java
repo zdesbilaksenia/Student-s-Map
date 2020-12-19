@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -18,6 +18,10 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studentmap.Fragments.PlaceCardFragment;
+import com.example.studentmap.MapViewModel;
+import com.example.studentmap.Place;
+import com.example.studentmap.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

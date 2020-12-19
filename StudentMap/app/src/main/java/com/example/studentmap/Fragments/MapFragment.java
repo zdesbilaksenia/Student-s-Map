@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -19,6 +19,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.studentmap.MapViewModel;
+import com.example.studentmap.Place;
+import com.example.studentmap.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -46,6 +50,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     FusedLocationProviderClient client;
     Location currentLocation;
+    HashMap<String, Integer> markers = new HashMap<String, Integer>();
 
     String url;
 
@@ -83,12 +88,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         MarkerOptions options = new MarkerOptions();
                         options.position(latLng);
                         options.title(name);
-                        map.addMarker(options);
+                        markers.put(map.addMarker(options).getId(), i);
                         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker marker) {
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("place", places.get(Integer.parseInt(marker.getId().substring(1)) - 1));
+                                bundle.putSerializable("place", places.get(markers.get(marker.getId())));
                                 PlaceCardFragment placeCardFragment = new PlaceCardFragment();
                                 placeCardFragment.setArguments(bundle);
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
@@ -130,12 +135,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             MarkerOptions options = new MarkerOptions();
                             options.position(latLng);
                             options.title(name);
-                            map.addMarker(options);
+                            markers.put(map.addMarker(options).getId(), i);
                             map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                 @Override
                                 public void onInfoWindowClick(Marker marker) {
                                     Bundle bundle = new Bundle();
-                                    bundle.putSerializable("place", places.get(Integer.parseInt(marker.getId().substring(1)) - 2));
+                                    bundle.putSerializable("place", places.get(markers.get(marker.getId())));
                                     PlaceCardFragment placeCardFragment = new PlaceCardFragment();
                                     placeCardFragment.setArguments(bundle);
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();

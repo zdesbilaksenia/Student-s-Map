@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +20,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.studentmap.MainActivity;
 import com.example.studentmap.Network.Entity.User;
 import com.example.studentmap.Network.RequestMakerModel;
+import com.example.studentmap.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import okhttp3.OkHttpClient;
@@ -38,6 +40,11 @@ public class Registration extends Fragment {
     RadioGroup radioGroup;
     Button enterBtn;
     Button registrationBtn;
+    String name;
+    String surname;
+    String login;
+    String age;
+    String gender;
 
 
 
@@ -48,6 +55,7 @@ public class Registration extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.registration,
                 container, false);
+        myPreferences = getActivity().getSharedPreferences("mysettings", Context.MODE_PRIVATE);
         newLogin = view.findViewById(R.id.new_login);
         newPassword = view.findViewById(R.id.new_password);
         enterBtn = view.findViewById(R.id.btn_to_enter);
@@ -69,6 +77,12 @@ public class Registration extends Fragment {
         registrationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                login = newLogin.getText().toString();
+                name = nameRegistration.getText().toString();
+                surname = surnameRegistration.getText().toString();
+                age = ageRegistration.getText().toString();
+
+
                 User user = new User();
                 user.setLogin(newLogin.getText().toString());
                 user.setPassword(newPassword.getText().toString());
@@ -101,7 +115,11 @@ public class Registration extends Fragment {
                 if(integer == 1){
 
                     SharedPreferences.Editor editor = myPreferences.edit();
-                    editor.putString("mysettings","1");
+                    editor.putString("auth","1");
+                    editor.putString("login", login);
+                    editor.putString("name", name);
+                    editor.putString("surname", surname);
+                    editor.putString("age", age);
                     editor.apply();
                     close();
                 }else Toast.makeText(getContext(), "Ошибка создания учетной записи!!!", Toast.LENGTH_SHORT).show();
@@ -113,7 +131,7 @@ public class Registration extends Fragment {
 
 
     void close(){
-        startActivity(new Intent(getActivity(),MainActivity.class));
+        startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
 
     }
