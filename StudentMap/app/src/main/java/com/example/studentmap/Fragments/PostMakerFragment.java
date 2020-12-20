@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -41,6 +42,7 @@ public class PostMakerFragment extends Fragment {
     ImageView imageView;
     Button addPostButton;
     Button selectImageButton;
+    RatingBar ratingBar;
     Button backButton;
     EditText textPost;
     public Uri imageUri = null;
@@ -48,6 +50,7 @@ public class PostMakerFragment extends Fragment {
     Firebase firebase;
     private OkHttpClient client;
     SharedPreferences myPreferences;
+    float rating;
 
 
     @Override
@@ -61,6 +64,7 @@ public class PostMakerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         myPreferences = getActivity().getSharedPreferences("mysettings", Context.MODE_PRIVATE);
+
 
          firebase = new Firebase();
         LiveData<String> newUri = firebase.getUridata();
@@ -96,8 +100,13 @@ public class PostMakerFragment extends Fragment {
                 post.setName("Пост " + name);
                 post.setLogin(myPreferences.getString("login","0"));
                 postDb.setLogin(myPreferences.getString("login","0"));
+                rating = ratingBar.getRating();
+                Log.d("Rating", Float.toString(rating));
+                post.setRating(rating);
+                postDb.setRating(rating);
 
                 sendPostToDatabase(postDb);
+
 
                 sendPostOnServer(post);
             }
@@ -105,6 +114,8 @@ public class PostMakerFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_post_maker, container, false);
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
+
         selectImageButton = (Button) rootView.findViewById(R.id.button);
         addPostButton = (Button) rootView.findViewById(R.id.button2);
         textPost = (EditText) rootView.findViewById(R.id.textPost);

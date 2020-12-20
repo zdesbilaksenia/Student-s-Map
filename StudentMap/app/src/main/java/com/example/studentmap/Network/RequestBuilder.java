@@ -49,6 +49,7 @@ public class RequestBuilder {
             user_json.put("location", post.getLocation());
             user_json.put("text", post.getText());
             user_json.put("img",  post.getImg());
+            user_json.put("rating", post.getRating());
             json = user_json.toString();
             Log.d("Post_For_PostReq", json);
 

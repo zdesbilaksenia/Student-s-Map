@@ -15,6 +15,7 @@ import com.example.studentmap.Fragments.FeedListFragment;
 import com.example.studentmap.Fragments.ListFragment;
 import com.example.studentmap.Fragments.Login;
 import com.example.studentmap.Fragments.MapFragment;
+import com.example.studentmap.Fragments.PersonalPageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -92,8 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.fragment4:
                     if (getSupportFragmentManager().findFragmentByTag("Login") == null) {
-                    Login login = new Login();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, login, "LoginFragment").commit();
+                        PersonalPageFragment personalPageFragment = new PersonalPageFragment();
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
                     }
                     return true;
 
