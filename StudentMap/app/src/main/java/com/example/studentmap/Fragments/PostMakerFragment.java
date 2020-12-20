@@ -190,8 +190,9 @@ public class PostMakerFragment extends Fragment {
     }
     void end(){
         MapFragment mapFragment = new MapFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
+
+        FeedListFragment feedListFragment = new FeedListFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, feedListFragment, "FeedListFragment").commit();
     }
 
 }
