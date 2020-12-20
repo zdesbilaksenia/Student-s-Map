@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -19,6 +19,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.studentmap.MapViewModel;
+import com.example.studentmap.Place;
+import com.example.studentmap.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,10 +30,12 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -45,6 +50,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     FusedLocationProviderClient client;
     Location currentLocation;
+    HashMap<String, Integer> markers = new HashMap<String, Integer>();
 
     String url;
 
@@ -82,9 +88,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         MarkerOptions options = new MarkerOptions();
                         options.position(latLng);
                         options.title(name);
-                        System.out.println(map);
-                        System.out.println("ob");
-                        map.addMarker(options);
+                        markers.put(map.addMarker(options).getId(), i);
+                        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                            @Override
+                            public void onInfoWindowClick(Marker marker) {
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("place", places.get(markers.get(marker.getId())));
+                                PlaceCardFragment placeCardFragment = new PlaceCardFragment();
+                                placeCardFragment.setArguments(bundle);
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                            }
+                        });
                     }
                 }
             });
@@ -121,9 +135,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             MarkerOptions options = new MarkerOptions();
                             options.position(latLng);
                             options.title(name);
-                            System.out.println(map);
-                            System.out.println("ob");
-                            map.addMarker(options);
+                            markers.put(map.addMarker(options).getId(), i);
+                            map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("place", places.get(markers.get(marker.getId())));
+                                    PlaceCardFragment placeCardFragment = new PlaceCardFragment();
+                                    placeCardFragment.setArguments(bundle);
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                                }
+                            });
                         }
                     }
                 });
@@ -135,12 +157,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private void initGoogleMap(Bundle savedInstanceState) {
         Bundle mapViewBundle = null;
-        System.out.println(savedInstanceState);
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
         mMapView.onCreate(mapViewBundle);
-        System.out.println(mMapView);System.out.println("init");
         getCurrentLocation();
     }
 
@@ -151,18 +171,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         Task<Location> task = client.getLastLocation();
-        mMapView.getMapAsync(MapFragment.this);
-        System.out.println(mMapView);System.out.println("loc");
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null){
                     currentLocation = location;
+                    mapViewModel.setCurrentLocation(currentLocation);
                 }
-                //mMapView.getMapAsync(MapFragment.this);
+                mMapView.getMapAsync(MapFragment.this);
             }
         });
-        System.out.println(currentLocation);
         mapViewModel.setCurrentLocation(currentLocation);
     }
 
@@ -172,8 +190,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         map = googleMap;
         //LatLng latLng = new LatLng(55.751244, 37.618423);
-        System.out.println(map);
-        System.out.println("ready");
         MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
@@ -202,34 +218,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
         mMapView.onSaveInstanceState(mapViewBundle);
-        System.out.println(mapViewBundle);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mMapView.onResume();
-        System.out.println(1);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mMapView.onStart();
-        System.out.println(2);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mMapView.onStop();
-        System.out.println(3);
     }
     @Override
     public void onPause() {
         mMapView.onPause();
         super.onPause();
-        System.out.println(4);
     }
 
     @Override
@@ -237,15 +248,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //getFragmentManager().beginTransaction().remove(MapFragment.this).commit();
         mMapView.onDestroy();
         super.onDestroy();
-        System.out.println(5);
-
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
-        System.out.println(6);
     }
 
 }

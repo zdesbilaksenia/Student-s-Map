@@ -1,12 +1,17 @@
 package com.example.studentmap;
 
-public class Place {
+
+import java.io.Serializable;
+
+public class Place implements Serializable {
     private double longitude;
     private double latitude;
     private String name;
     private double rating;
     private String icon;
     private String vicinity;
+    private String distance;
+    private String photo;
 
     public double getLongitude() {
         return longitude;
@@ -43,4 +48,12 @@ public class Place {
     public String getVicinity() { return vicinity; }
 
     public void setVicinity(String vicinity) { this.vicinity = vicinity; }
+
+    public String getDistance() { return distance; }
+
+    public void setDistance(String distance) { this.distance = distance; }
+
+    public String getPhoto() { return photo; }
+
+    public void setPhoto(String photo) { this.photo = photo; }
 }

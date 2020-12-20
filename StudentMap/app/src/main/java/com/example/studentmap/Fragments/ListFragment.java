@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -18,6 +18,10 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studentmap.Fragments.PlaceCardFragment;
+import com.example.studentmap.MapViewModel;
+import com.example.studentmap.Place;
+import com.example.studentmap.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -59,7 +63,6 @@ public class ListFragment extends Fragment {
             this.data = data;
         }
 
-
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_of_list, parent, false);
@@ -69,6 +72,16 @@ public class ListFragment extends Fragment {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.bind(data.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("place", data.get(holder.getAdapterPosition()));
+                    PlaceCardFragment placeCardFragment = new PlaceCardFragment();
+                    placeCardFragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                }
+            });
         }
 
         @Override
@@ -95,13 +108,17 @@ public class ListFragment extends Fragment {
             }
 
             public void bind(Place place) {
-                Picasso.get().load(place.getIcon()).into(image);
+                if (place.getPhoto() != null) {
+                    Picasso.get().load(place.getPhoto()).into(image);
+                } else {
+                    Picasso.get().load(place.getIcon()).into(image);
+                }
                 name.setText(place.getName());
                 address.setText(place.getVicinity());
                 Location temp = new Location("");
                 temp.setLongitude(place.getLongitude());
                 temp.setLatitude(place.getLatitude());
-                distance.setText(String.valueOf((double)(Math.ceil (temp.distanceTo(mapViewModel.getCurrentLocation()) / 100)) / 10) +"км");
+                distance.setText(place.getDistance());
                 ratingBar.setRating((float) place.getRating());
                 rating.setText(String.valueOf(place.getRating()));
             }

@@ -1,6 +1,8 @@
 package com.example.studentmap.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +20,6 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 
@@ -32,7 +33,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import okhttp3.OkHttpClient;
 
@@ -47,6 +47,7 @@ public class PostMakerFragment extends Fragment {
     private StorageReference mStorageRef;
     Firebase firebase;
     private OkHttpClient client;
+    SharedPreferences myPreferences;
 
 
     @Override
@@ -59,6 +60,7 @@ public class PostMakerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        myPreferences = getActivity().getSharedPreferences("mysettings", Context.MODE_PRIVATE);
 
          firebase = new Firebase();
         LiveData<String> newUri = firebase.getUridata();
@@ -66,6 +68,15 @@ public class PostMakerFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(String s) {
+                String address = "";
+                String name = "";
+                Bundle bundle = getArguments();
+                if(bundle != null){
+                     address = bundle.getString("address");
+                     name = bundle.getString("name");
+                    Log.d("address", address);
+                    Log.d("name", name);
+                }
                 Log.d("Firbase_img_ready ",s);
                 Post post = new Post();
                 Postdb postDb = new Postdb();
@@ -78,9 +89,13 @@ public class PostMakerFragment extends Fragment {
                 postDb.setDate(dateString);
                 post.setText(textPost.getText().toString());
                 postDb.setText(textPost.getText().toString());
-                post.setName("Name");
-                postDb.setName("Name");
-                post.setLocation("Some location");
+
+                postDb.setName("Пост " + name);
+                postDb.setLocation(address);
+                post.setLocation(address);
+                post.setName("Пост " + name);
+                post.setLogin(myPreferences.getString("login","0"));
+                postDb.setLogin(myPreferences.getString("login","0"));
 
                 sendPostToDatabase(postDb);
 
@@ -148,6 +163,8 @@ public class PostMakerFragment extends Fragment {
             public void onChanged(Integer integer) {
                 Toast.makeText(getContext(), "Пост добавлен!", Toast.LENGTH_SHORT).show();
                 Log.d("ReadyAll", "ready");
+                end();
+
 
             }
         });
@@ -159,6 +176,11 @@ public class PostMakerFragment extends Fragment {
 
         RoomViewModel roomViewModel = ViewModelProviders.of(this).get(RoomViewModel.class);
         roomViewModel.addPost(post);
+    }
+    void end(){
+        MapFragment mapFragment = new MapFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.studentmap;
+package com.example.studentmap.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.studentmap.Network.Entity.Post;
 import com.example.studentmap.Network.RequestMakerModel;
+import com.example.studentmap.R;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,8 @@ public class FeedListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull feedViewHolder holder, int position) {
             Post post = mData.get(position);
-            holder.userName.setText(post.getName());
+            holder.userName.setText(post.getLogin());
+            holder.place.setText(post.getLocation());
             holder.review.setText(post.getText());
             Glide.with(getContext()).load(post.getImg()).into(holder.photo);
         }
