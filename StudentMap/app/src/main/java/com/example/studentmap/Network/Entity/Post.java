@@ -8,6 +8,7 @@ public class Post {
     private String location;
     private String text;
     private String img;
+    private float rating;
 
     public String getName() {
         return name;
@@ -56,4 +57,14 @@ public class Post {
     public void setImg(String img) {
         this.img = img;
     }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+
 }

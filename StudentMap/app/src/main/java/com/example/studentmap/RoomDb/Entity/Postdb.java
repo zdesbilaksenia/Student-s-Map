@@ -17,6 +17,7 @@ public class Postdb {
     private String location;
     private String text;
     private String img;
+    private float rating;
 
     @NonNull
     public String getName() {
@@ -65,5 +66,13 @@ public class Postdb {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }

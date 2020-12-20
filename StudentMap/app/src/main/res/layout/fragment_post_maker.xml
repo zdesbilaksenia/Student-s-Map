@@ -1,74 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostMakerFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="55dp"
+    android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="205dp"
-        android:layout_height="136dp"
-        android:layout_marginTop="16dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:src="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Выбрать фото"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        android:orientation="vertical"
+        android:paddingBottom="55dp"
+        android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/textPost"
-        android:layout_width="304dp"
-        android:layout_height="121dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="205dp"
+            android:layout_height="136dp"
+            android:layout_marginTop="16dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_launcher_background"
+            tools:src="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="177dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:text="Добавить пост"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPost" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Выбрать фото"/>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Расскажите о месте:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Расскажите о месте:"/>
 
-    <RatingBar
-        android:id="@+id/ratingBar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        <EditText
+            android:id="@+id/textPost"
+            android:layout_height="wrap_content"
+            android:layout_width="304dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Поставьте оценку:"/>
+
+
+        <RatingBar
+            android:layout_marginTop="10dp"
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:isIndicator="false" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="177dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:text="Добавить пост"/>
+
+    </LinearLayout>
+
+</ScrollView>
