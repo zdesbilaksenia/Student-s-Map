@@ -96,6 +96,8 @@ public class Login extends Fragment {
                     Integer age = user.getAge();
                     String gender = user.getGender();
                     String login = user.getLogin();
+                    String password = user.getPassword();
+
 
 
                     Log.d("Ready", user.getName());
@@ -110,6 +112,7 @@ public class Login extends Fragment {
                         editor.putString("name", name);
                         editor.putString("surname", surname);
                         editor.putString("age", Integer.toString(age));
+                        editor.putString("password", password);
                         editor.apply();
                         close();
 
