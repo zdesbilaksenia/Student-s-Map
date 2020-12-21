@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.fragment2:
                     if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
                         MapFragment mapFragment = new MapFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, mapFragment, "MapFragment").addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").addToBackStack(null).commit();
                     }else {
                         Fragment fragment =  getSupportFragmentManager().findFragmentByTag("MapFragment");
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, fragment, "MapFragment").addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "MapFragment").addToBackStack(null).commit();
                     }
 
                     return true;
@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
                     if (getSupportFragmentManager().findFragmentByTag("ListFragment") == null) {
                         ListFragment listFragment = new ListFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, listFragment, "ListFragment").commit();
+                    }else {
+                        Fragment fragment =  getSupportFragmentManager().findFragmentByTag("ListFragment");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "ListFragment").addToBackStack(null).commit();
                     }
                     return true;
 
@@ -88,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
                     if (getSupportFragmentManager().findFragmentByTag("FeedFragment") == null) {
                         FeedListFragment feedListFragment = new FeedListFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, feedListFragment, "FeedFragment").commit();
+                    }else {
+                        Fragment fragment =  getSupportFragmentManager().findFragmentByTag("FeedFragment");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "FeedFragment").addToBackStack(null).commit();
                     }
                     return true;
 
@@ -95,8 +101,11 @@ public class MainActivity extends AppCompatActivity {
                     if (getSupportFragmentManager().findFragmentByTag("Login") == null) {
                         PersonalPageFragment personalPageFragment = new PersonalPageFragment();
 
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
+
+                    }else {
+                        Fragment fragment =  getSupportFragmentManager().findFragmentByTag("Login");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "Login").addToBackStack(null).commit();
                     }
                     return true;
 

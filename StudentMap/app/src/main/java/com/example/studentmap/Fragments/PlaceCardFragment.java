@@ -60,7 +60,7 @@ public class PlaceCardFragment extends Fragment {
                 postMakerFragment.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                ft.add(R.id.fragmentContainer,postMakerFragment);
+                ft.replace(R.id.fragmentContainer,postMakerFragment);
                 ft.addToBackStack(null);
                 ft.commit();
             }
