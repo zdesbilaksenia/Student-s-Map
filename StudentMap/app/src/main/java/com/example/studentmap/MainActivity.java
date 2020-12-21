@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.fragment2:
                     if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
                         MapFragment mapFragment = new MapFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, mapFragment, "MapFragment").addToBackStack(null).commit();
                     }else {
                         Fragment fragment =  getSupportFragmentManager().findFragmentByTag("MapFragment");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "MapFragment").commit();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, fragment, "MapFragment").addToBackStack(null).commit();
                     }
 
                     return true;
@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
                     if (getSupportFragmentManager().findFragmentByTag("Login") == null) {
                         PersonalPageFragment personalPageFragment = new PersonalPageFragment();
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
                     }
                     return true;
 

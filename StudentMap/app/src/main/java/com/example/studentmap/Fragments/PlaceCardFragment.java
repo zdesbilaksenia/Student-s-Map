@@ -59,8 +59,9 @@ public class PlaceCardFragment extends Fragment {
                 bundle.putString("name", place.getName());
                 postMakerFragment.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                ft.add(R.id.fragmentContainer,postMakerFragment);
                 ft.addToBackStack(null);
-                ft.replace(R.id.fragmentContainer,postMakerFragment);
                 ft.commit();
             }
         });

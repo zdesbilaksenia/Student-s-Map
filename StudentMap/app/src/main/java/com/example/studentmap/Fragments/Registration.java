@@ -45,6 +45,7 @@ public class Registration extends Fragment {
     String login;
     String age;
     String gender;
+    String password;
 
 
 
@@ -81,6 +82,8 @@ public class Registration extends Fragment {
                 name = nameRegistration.getText().toString();
                 surname = surnameRegistration.getText().toString();
                 age = ageRegistration.getText().toString();
+                password = newPassword.getText().toString();
+               // gender =
 
 
                 User user = new User();
@@ -120,6 +123,7 @@ public class Registration extends Fragment {
                     editor.putString("name", name);
                     editor.putString("surname", surname);
                     editor.putString("age", age);
+                    editor.putString("password", password);
                     editor.apply();
                     close();
                 }else Toast.makeText(getContext(), "Ошибка создания учетной записи!!!", Toast.LENGTH_SHORT).show();

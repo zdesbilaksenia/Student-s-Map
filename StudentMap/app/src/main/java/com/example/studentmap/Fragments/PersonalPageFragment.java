@@ -27,6 +27,7 @@ public class PersonalPageFragment extends Fragment {
     SharedPreferences myPreferences;
 
     Button back;
+    Button edit;
 
 
 
@@ -48,6 +49,7 @@ public class PersonalPageFragment extends Fragment {
         login = (TextView) rootView.findViewById(R.id.login_page);
 
         back = (Button) rootView.findViewById(R.id.exit);
+        edit = (Button) rootView.findViewById(R.id.edit);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +63,14 @@ public class PersonalPageFragment extends Fragment {
                 editor.clear().commit();
                 out();
 
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditPersonalPageFragment editFragment = new EditPersonalPageFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, editFragment, "EditPersonalPageFragment").commit();
             }
         });
 
