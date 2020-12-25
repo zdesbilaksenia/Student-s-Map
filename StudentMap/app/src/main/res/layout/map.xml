@@ -27,10 +27,12 @@
             android:background="@android:drawable/editbox_background"/>
 
         <Button
+            android:id="@+id/btn_find"
+            android:background="@drawable/button_style"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_find"
-            android:text="Поиск"/>
+            android:text="Поиск" />
 
     </LinearLayout>
 

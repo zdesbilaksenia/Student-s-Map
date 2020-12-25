@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_style"
             android:layout_marginTop="16dp"
             android:text="Изменить фото"/>
 
@@ -39,21 +40,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="10dp"
+                android:layout_margin="8dp"
                 android:textSize="25sp"
+                android:textColor="@color/purple_500"
                 android:text="Имя:"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_margin="8dp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_name"
+                    android:background="@color/white"
                     android:digits="abcdefghigklmnopqrstuvwxyzABCDEFJHIGKLMNOPQRSTUVWXYZ
             абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
                     android:maxLength="20"/>
@@ -63,20 +64,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
+                android:layout_margin="8dp"
                 android:textSize="25sp"
+                android:textColor="@color/purple_500"
                 android:text="Фамилия:"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_margin="8dp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:id="@+id/edit_surname"
                     android:digits="abcdefghigklmnopqrstuvwxyzABCDEFJHIGKLMNOPQRSTUVWXYZ
             абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
@@ -87,18 +88,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_margin="8dp"
                 android:textSize="25sp"
+                android:textColor="@color/purple_500"
                 android:text="Возраст:"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_margin="8dp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_age"
                     android:digits="1234567890"
@@ -110,16 +112,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_margin="8dp">
 
                 <TextView
                     android:id="@+id/edt_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="32dp"
                     android:text="Пол"
+                    android:textColor="@color/purple_500"
                     android:textSize="25sp" />
 
                 <RadioGroup
@@ -146,19 +148,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_margin="8dp"
                 android:textSize="25sp"
-                android:text="login:"/>
+                android:textColor="@color/purple_500"
+                android:text="Логин"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_margin="8dp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:id="@+id/edit_login"
                     android:maxLength="20"
                     android:digits="1234567890abcdefghigklmnopqrstuvwxyzABCDEFJHIGKLMNOPQRSTUVWXYZ" />
@@ -168,18 +171,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_margin="8dp"
                 android:textSize="25sp"
-                android:text="password:"/>
+                android:textColor="@color/purple_500"
+                android:text="Пароль:"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_margin="8dp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_password" />
 
@@ -187,9 +191,10 @@
 
             <Button
                 android:id="@+id/edit_btn"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_style"
                 android:layout_gravity="center"
                 android:text="Редактировать"/>
         </LinearLayout>

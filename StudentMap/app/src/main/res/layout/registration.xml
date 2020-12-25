@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Registration"
+            android:textColor="@color/purple_500"
             android:text="РЕГИСТРАЦИЯ"
             android:gravity="center"
             android:textSize="20sp"
@@ -27,6 +28,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:id="@+id/name_registration"
                 android:digits="abcdefghigklmnopqrstuvwxyzABCDEFJHIGKLMNOPQRSTUVWXYZ
             абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
@@ -43,6 +45,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:id="@+id/surname_registration"
                 android:digits="abcdefghigklmnopqrstuvwxyzABCDEFJHIGKLMNOPQRSTUVWXYZ
             абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
@@ -59,6 +62,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:id="@+id/age_registration"
                 android:digits="1234567890"
                 android:maxLength="2"
@@ -75,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/new_login"
+                android:background="@color/white"
                 android:hint="login"
                 android:maxLength="20"
                 android:digits="1234567890abcdefghigklmnopqrstuvwxyzABCDEFJHIGKLMNOPQRSTUVWXYZ" />
@@ -90,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/new_password"
+                android:background="@color/white"
                 android:hint="password"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -102,6 +108,7 @@
 
             <TextView
                 android:id="@+id/gender"
+                android:textColor="@color/purple_500"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -135,6 +142,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_registration"
             android:layout_gravity="center"
+            android:background="@drawable/button_style"
             android:text="Зарегестрироваться"
             android:layout_marginTop="20dp"/>
 
@@ -142,6 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btn_to_enter"
+            android:background="@drawable/button_style"
             android:layout_gravity="center"
             android:text="Войти"
             android:layout_marginTop="10dp"/>
