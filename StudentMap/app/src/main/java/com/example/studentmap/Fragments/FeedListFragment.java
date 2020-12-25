@@ -276,10 +276,12 @@ public class FeedListFragment extends Fragment {
         ArrayList<User> users;
 
 
+
         public feedAdapter(ArrayList<Post> postList, ArrayList<User> userList){
             mData = postList;
             users = userList;
         }
+
 
         @NonNull
         @Override
@@ -290,7 +292,7 @@ public class FeedListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull feedViewHolder holder, int position) {
-            Post post = mData.get(position);
+            Post post = mData.get(mData.size()-1-position);
             holder.userName.setText(post.getLogin());
             holder.place.setText(post.getLocation());
             holder.review.setText(post.getText());
