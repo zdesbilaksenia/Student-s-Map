@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.studentmap.MainActivity;
 import com.example.studentmap.R;
 
@@ -28,6 +30,7 @@ public class PersonalPageFragment extends Fragment {
 
     Button back;
     Button edit;
+    ImageView personImage;
 
 
 
@@ -47,6 +50,7 @@ public class PersonalPageFragment extends Fragment {
         surname = (TextView) rootView.findViewById(R.id.surname_page);
         age = (TextView) rootView.findViewById(R.id.age_page);
         login = (TextView) rootView.findViewById(R.id.login_page);
+        personImage = (ImageView) rootView.findViewById(R.id.imagePerson);
 
         back = (Button) rootView.findViewById(R.id.exit);
         edit = (Button) rootView.findViewById(R.id.edit);
@@ -81,6 +85,9 @@ public class PersonalPageFragment extends Fragment {
         surname.setText(myPreferences.getString("surname", "0"));
         age.setText(myPreferences.getString("age", "0"));
         login.setText(myPreferences.getString("login", "0"));
+        if(myPreferences.getString("personImg", "0") != "0"){
+            Glide.with(getContext()).load(myPreferences.getString("personImg", "0")).into(personImage);
+        }
 
 
 

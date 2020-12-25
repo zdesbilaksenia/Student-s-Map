@@ -105,7 +105,7 @@ public class PostMakerFragment extends Fragment {
                 post.setRating(rating);
                 postDb.setRating(rating);
 
-                sendPostToDatabase(postDb);
+               // sendPostToDatabase(postDb);
 
 
                 sendPostOnServer(post);
@@ -113,8 +113,8 @@ public class PostMakerFragment extends Fragment {
         });
 
         View rootView = inflater.inflate(R.layout.fragment_post_maker, container, false);
-        imageView = (ImageView) rootView.findViewById(R.id.imageView);
-        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
+        imageView = (ImageView) rootView.findViewById(R.id.imagePerson);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar1);
 
         selectImageButton = (Button) rootView.findViewById(R.id.button);
         addPostButton = (Button) rootView.findViewById(R.id.button2);

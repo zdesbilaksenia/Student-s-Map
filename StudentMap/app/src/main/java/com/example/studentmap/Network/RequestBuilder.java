@@ -27,6 +27,7 @@ public class RequestBuilder {
             user_json.put("surname", user.getSurname());
             user_json.put("age", user.getAge());
             user_json.put("gender", user.getGender());
+            user_json.put("img",user.getImg());
             json = user_json.toString();
             Log.d("User_For_PostReq", json);
 
