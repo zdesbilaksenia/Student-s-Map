@@ -18,7 +18,6 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.studentmap.Fragments.PlaceCardFragment;
 import com.example.studentmap.MapViewModel;
 import com.example.studentmap.Place;
 import com.example.studentmap.R;
@@ -103,7 +102,7 @@ public class ListFragment extends Fragment {
                 name = itemView.findViewById(R.id.name);
                 address = itemView.findViewById(R.id.address);
                 distance = itemView.findViewById(R.id.distance);
-                ratingBar = itemView.findViewById(R.id.ratingBar);
+                ratingBar = itemView.findViewById(R.id.ratingBar1);
                 rating = itemView.findViewById(R.id.rating);
             }
 

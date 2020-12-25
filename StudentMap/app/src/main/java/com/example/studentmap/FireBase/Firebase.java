@@ -25,6 +25,30 @@ public class Firebase {
 
     }
 
+
+
+    public void uploadImageIcon(Uri imageUri, StorageReference mStorageRef) {
+
+
+        final StorageReference mRef = mStorageRef.child(System.currentTimeMillis() + "_image");
+        UploadTask up = mRef.putFile(imageUri);
+        Task<Uri> task = up.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                return mRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                // Ссылка на картинку
+                Log.d("URI", task.getResult().toString());
+                livedataUri.postValue(task.getResult().toString());
+
+            }
+        });
+    }
+
+
     public void uploadImage(Uri imageUri, StorageReference mStorageRef) {
 
 
