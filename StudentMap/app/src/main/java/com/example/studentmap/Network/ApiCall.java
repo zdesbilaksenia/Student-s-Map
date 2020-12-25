@@ -68,5 +68,26 @@ import okhttp3.Response;
 
 
         }
+
+        public static String PUT(OkHttpClient client, HttpUrl url, RequestBody body) throws IOException {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .put(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            String answer = response.body().string();
+            Log.d("ApiCall_Put", answer);
+
+            switch (response.code()){
+
+                case 200: return answer;
+                case 201 : return answer;
+                case 404: return "NOT_FOUND";
+                case 500: return "SERVER_ERROR";
+                default:return "ERROR";
+            }
+
+
+        }
     }
 

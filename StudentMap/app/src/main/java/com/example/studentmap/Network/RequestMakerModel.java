@@ -42,7 +42,7 @@ public class RequestMakerModel extends ViewModel {
         }
         return liveDataUser;
     }
-    LiveData<ArrayList<User>> getAllUsersData(){
+    public LiveData<ArrayList<User>> getAllUsersData(){
         if(livedataAllUser == null){
             livedataAllUser = new MutableLiveData<>();
         }
@@ -108,6 +108,7 @@ public class RequestMakerModel extends ViewModel {
                                 user.setSurname(jsonArray.getJSONObject(i).getString("surname"));
                                 user.setAge(jsonArray.getJSONObject(i).getInt("age"));
                                 user.setGender(jsonArray.getJSONObject(i).getString("gender"));
+                                user.setImg(jsonArray.getJSONObject(i).getString("img"));
                                 users.add(user);
                                 Log.d("user", user.getName() + "  "+  user.getPassword() + " " + user.getLogin()  );
                             }
@@ -131,7 +132,7 @@ public class RequestMakerModel extends ViewModel {
 
     User userHelp;
 
-    void GetUserByLogin(OkHttpClient client1 ,final String login){
+    public void GetUserByLogin(OkHttpClient client1 ,final String login){
         client = client1;
         userHelp = new User();
 
@@ -152,6 +153,7 @@ public class RequestMakerModel extends ViewModel {
                             userHelp.setSurname(user_json.getString("surname"));
                             userHelp.setGender(user_json.getString("gender"));
                             userHelp.setAge(user_json.getInt("age"));
+                            userHelp.setImg(user_json.getString("img"));
                             Log.d("User","User: " + userHelp.getLogin() + " " + userHelp.getPassword() + " " + userHelp.getName());
                             liveDataUser.postValue(userHelp);
 
@@ -189,6 +191,7 @@ public class RequestMakerModel extends ViewModel {
                             userHelp.setSurname(user_json.getString("surname"));
                             userHelp.setGender(user_json.getString("gender"));
                             userHelp.setAge(user_json.getInt("age"));
+                            userHelp.setImg(user_json.getString("img"));
                             Log.d("User","User: " + userHelp.getLogin() + " " + userHelp.getPassword() + " " + userHelp.getName());
 
                             liveDataUser.postValue(userHelp);
@@ -231,6 +234,31 @@ public class RequestMakerModel extends ViewModel {
                 }
             }
         });
+
+    }
+
+    public void updateUser(OkHttpClient client1, final User user){
+        client = client1;
+
+        service.submit(new Runnable() {
+            @Override
+            public void run() {
+                String response_text;
+                try {
+                    response_text = ApiCall.PUT(client,RequestBuilder.buildURL("users",user.getLogin()),RequestBuilder.addBody(user));
+                    Log.d("RequestMaker_updateUser", response_text);
+                    if(response_text != "NOT_FOUND" && response_text != "SERVER_ERROR" && response_text != "ERROR") {
+
+                        Log.d("AddUserPost", "well");
+                        liveDataInt.postValue(1);
+
+                    }else liveDataInt.postValue(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
 
@@ -311,6 +339,7 @@ public class RequestMakerModel extends ViewModel {
                                 post.setLocation(jsonArray.getJSONObject(i).getString("location"));
                                 post.setText(jsonArray.getJSONObject(i).getString("text"));
                                 post.setImg(jsonArray.getJSONObject(i).getString("img"));
+                                post.setRating((float) jsonArray.getJSONObject(i).getDouble("rating"));
                                 posts.add(post);
                                 Log.d("Post", post.getName() + " " + post.getLocation() );
                             }

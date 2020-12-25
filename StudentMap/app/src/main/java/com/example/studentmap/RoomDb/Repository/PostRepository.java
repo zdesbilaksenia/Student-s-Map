@@ -34,6 +34,15 @@ public class PostRepository {
         });
     }
 
+    public void deleteAll(){
+        service.submit(new Runnable() {
+            @Override
+            public void run() {
+                postDao.deleteAll();
+            }
+        });
+    }
+
 
 
     public LiveData<List<Postdb>> getAllPosts(){return postDao.getAllPosts();}

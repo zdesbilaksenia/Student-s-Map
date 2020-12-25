@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.studentmap.Fragments.PostMakerFragment;
 import com.example.studentmap.Place;
 import com.example.studentmap.R;
 import com.squareup.picasso.Picasso;
@@ -34,7 +33,7 @@ public class PlaceCardFragment extends Fragment {
         ImageView image = view.findViewById(R.id.image);
         TextView name = view.findViewById(R.id.name);
         TextView address = view.findViewById(R.id.address);
-        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+        RatingBar ratingBar = view.findViewById(R.id.ratingBar1);
         TextView rating = view.findViewById(R.id.rating);
 
         Bundle bundle = this.getArguments();
