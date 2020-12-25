@@ -71,8 +71,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         btnFind = rootView.findViewById(R.id.btn_find);
 
 
-        String[] placeNameList = {"ATM", "Bank", "Hospital", "Movie Theater", "Restaurant", "Cafe"};
-        String[] placeTypeList = {"atm", "bank", "hospital", "movie_theater", "restaurant", "cafe"};
+        String[] placeNameList = {"Бары", "Кинотеатры", "Рестораны", "Кафе", "Клубы","Магазины",  "Торговые центры"};
+        String[] placeTypeList = {"bar", "movie_theater", "restaurant", "cafe", "night_club","supermarket",  "shopping_mall"};
 
 
         spType.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, placeNameList));
@@ -125,9 +125,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     public void onChanged(List<Place> places) {
                         map.clear();
                         LatLng mlatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                        MarkerOptions mOptions = new MarkerOptions().position(mlatLng).title("I am here").visible(true);
+                        MarkerOptions mOptions = new MarkerOptions().position(mlatLng).visible(true);
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatLng, 13));
-                        mOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                        mOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
                         map.addMarker(mOptions);
                         for (int i = 0; i < places.size(); i++) {
                             String name = places.get(i).getName();
@@ -190,9 +190,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         map = googleMap;
         //LatLng latLng = new LatLng(55.751244, 37.618423);
-        MarkerOptions options = new MarkerOptions().position(latLng).title("I am here").visible(true);
+        MarkerOptions options = new MarkerOptions().position(latLng).visible(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
         map.addMarker(options);
     }
 

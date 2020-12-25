@@ -26,23 +26,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:paddingStart="20dp"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
+                    android:textColor="@color/purple_500"
                     android:text="Имя:"/>
 
                 <TextView
                     android:id="@+id/name_page"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:textSize="25sp"
                     android:text="ИМЯ"/>
             </LinearLayout>
@@ -51,18 +52,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
+                    android:textColor="@color/purple_500"
                     android:text="Фамилия:"/>
 
                 <TextView
                     android:id="@+id/surname_page"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:textSize="25sp"
                     android:text="ФАМИЛИЯ"/>
             </LinearLayout>
@@ -71,18 +72,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
+                    android:textColor="@color/purple_500"
                     android:text="Возраст:"/>
 
                 <TextView
                     android:id="@+id/age_page"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:textSize="25sp"
                     android:text="ВОЗРАСТ"/>
             </LinearLayout>
@@ -91,18 +92,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
-                    android:text="login:"/>
+                    android:textColor="@color/purple_500"
+                    android:text="Логин"/>
 
                 <TextView
                     android:id="@+id/login_page"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:textSize="25sp"
                     android:text="LOGIN"/>
             </LinearLayout>
@@ -114,6 +115,7 @@
             android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_style"
             android:text="Редактировать"/>
 
         <Button
@@ -121,6 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="@drawable/button_style"
             android:text="Выйти" />
     </LinearLayout>
 </ScrollView>
