@@ -72,6 +72,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     Bundle bundle;
 
+    Spinner spType;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,7 +82,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
         initGoogleMap(savedInstanceState);
 
-        Spinner spType;
         Button btnFind;
 
         spType = rootView.findViewById(R.id.sp_type);
@@ -96,6 +97,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         bundle = this.getArguments();
         if (mapViewModel.getUrl() != null && bundle == null) {
+            spType.setSelection(mapViewModel.getSpinner());
             LiveData<List<Place>> data = mapViewModel.getData();
             data.observe(getActivity(), new Observer<List<Place>>() {
                 @Override
@@ -127,6 +129,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 int i = spType.getSelectedItemPosition();
+                mapViewModel.setSpinner(i);
                 url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
                         "?location=" + currentLocation.getLatitude()+","+currentLocation.getLongitude()+
                         "&radius=2000" + "&language=ru"+ "&type=" + placeTypeList[i] + "&sensor=true" +
@@ -216,6 +219,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
         map.addMarker(options);
         if (bundle != null) {
+            spType.setSelection(mapViewModel.getSpinner());
             Place place = (Place) bundle.getSerializable("place");
             LatLng latLngPlace = new LatLng(place.getLatitude(), place.getLongitude());
             MarkerOptions optionsPlace = new MarkerOptions();

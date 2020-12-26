@@ -21,6 +21,15 @@ public class MapViewModel extends AndroidViewModel implements ResponseCallback{
     private MutableLiveData<List<List<HashMap<String, String>>>> liveDataRoute;
     private List<List<HashMap<String, String>>> routes;
     private String urlRoute;
+    private Integer spinner;
+
+    public void setSpinner(int sp) {
+        spinner = sp;
+    }
+
+    public Integer getSpinner() {
+        return spinner;
+    }
 
     public LiveData<List<List<HashMap<String, String>>>> getDataRoutes() {
         liveDataRoute = new MutableLiveData<>();
