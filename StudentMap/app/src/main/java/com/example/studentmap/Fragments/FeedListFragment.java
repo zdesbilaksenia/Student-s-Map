@@ -231,15 +231,16 @@ public class FeedListFragment extends Fragment {
                                image.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
-                            }finally {
-
-                                try {
-                                    fos.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
                             }
+//                            finally {
+//
+//                                try {
+//                                    fos.close();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                            }
                             Postdb postdb = new Postdb();
 
                             postdb.setName(posts.get(a).getName());
