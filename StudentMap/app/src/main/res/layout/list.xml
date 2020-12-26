@@ -16,6 +16,13 @@
         android:layout_gravity="center"
         android:foregroundGravity="center">
 
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/purple_500"
+            android:text="Список мест пуст. Выберите категорию." />
     </FrameLayout>
 
 </RelativeLayout>
