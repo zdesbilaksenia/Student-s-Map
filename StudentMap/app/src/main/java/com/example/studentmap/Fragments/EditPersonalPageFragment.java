@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.studentmap.FireBase.Firebase;
 import com.example.studentmap.Network.Entity.User;
 import com.example.studentmap.Network.RequestMakerModel;
@@ -69,6 +70,8 @@ public class EditPersonalPageFragment extends Fragment {
         myPreferences = getActivity().getSharedPreferences("mysettings", Context.MODE_PRIVATE);
 
         firebase = new Firebase();
+
+        
         LiveData<String> newUri = firebase.getUridata();
         newUri.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

@@ -51,6 +51,7 @@ public class PersonalPageFragment extends Fragment {
         age = (TextView) rootView.findViewById(R.id.age_page);
         login = (TextView) rootView.findViewById(R.id.login_page);
         personImage = (ImageView) rootView.findViewById(R.id.imagePerson);
+        Glide.with((getContext())).load(R.drawable.avatar).into(personImage);
 
         back = (Button) rootView.findViewById(R.id.exit);
         edit = (Button) rootView.findViewById(R.id.edit);
