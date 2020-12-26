@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 public class PlaceCardFragment extends Fragment {
     Button addPostButton;
-
+    Button routeBtn;
 
     @Nullable
     @Override
@@ -29,12 +29,14 @@ public class PlaceCardFragment extends Fragment {
                 container, false);
 
         addPostButton = view.findViewById(R.id.btn_post);
+        routeBtn = view.findViewById(R.id.btn_route);
 
         ImageView image = view.findViewById(R.id.image);
         TextView name = view.findViewById(R.id.name);
         TextView address = view.findViewById(R.id.address);
         RatingBar ratingBar = view.findViewById(R.id.ratingBar1);
         TextView rating = view.findViewById(R.id.rating);
+        TextView dist = view.findViewById(R.id.dist);
 
         Bundle bundle = this.getArguments();
 
@@ -43,6 +45,7 @@ public class PlaceCardFragment extends Fragment {
         address.setText(place.getVicinity());
         ratingBar.setRating((float) place.getRating());
         rating.setText(String.valueOf(place.getRating()));
+        dist.setText(place.getDistance());
         if (place.getPhoto() != null) {
             Picasso.get().load(place.getPhoto()).into(image);
         } else {
@@ -65,9 +68,20 @@ public class PlaceCardFragment extends Fragment {
             }
         });
 
+        routeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapFragment mapFragment = new MapFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("place", place);
+                mapFragment.setArguments(bundle);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-
-
+                ft.replace(R.id.fragmentContainer,mapFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
 
         return view;
     }

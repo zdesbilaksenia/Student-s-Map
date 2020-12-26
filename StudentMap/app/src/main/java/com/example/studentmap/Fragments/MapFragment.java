@@ -2,6 +2,7 @@ package com.example.studentmap.Fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.studentmap.JsonParser;
 import com.example.studentmap.MapViewModel;
 import com.example.studentmap.Place;
 import com.example.studentmap.R;
@@ -32,9 +34,21 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -56,6 +70,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     MapViewModel mapViewModel;
 
+    Bundle bundle;
+
+    Spinner spType;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,7 +82,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mapViewModel = new ViewModelProvider(getActivity()).get(MapViewModel.class);
         initGoogleMap(savedInstanceState);
 
-        Spinner spType;
         Button btnFind;
 
         spType = rootView.findViewById(R.id.sp_type);
@@ -77,7 +94,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         spType.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, placeNameList));
 
-        if (mapViewModel.getUrl() != null) {
+
+        bundle = this.getArguments();
+        if (mapViewModel.getUrl() != null && bundle == null) {
+            spType.setSelection(mapViewModel.getSpinner());
             LiveData<List<Place>> data = mapViewModel.getData();
             data.observe(getActivity(), new Observer<List<Place>>() {
                 @Override
@@ -87,27 +107,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         LatLng latLng = new LatLng(places.get(i).getLatitude(), places.get(i).getLongitude());
                         MarkerOptions options = new MarkerOptions();
                         options.position(latLng);
-                        options.title(name);
+                        options.title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));;
                         markers.put(map.addMarker(options).getId(), i);
                         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker marker) {
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("place", places.get(markers.get(marker.getId())));
-                                PlaceCardFragment placeCardFragment = new PlaceCardFragment();
-                                placeCardFragment.setArguments(bundle);
-                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                                if (markers.get(marker.getId()) != null) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("place", places.get(markers.get(marker.getId())));
+                                    PlaceCardFragment placeCardFragment = new PlaceCardFragment();
+                                    placeCardFragment.setArguments(bundle);
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                                }
                             }
                         });
                     }
                 }
             });
         }
-
         btnFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = spType.getSelectedItemPosition();
+                mapViewModel.setSpinner(i);
                 url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
                         "?location=" + currentLocation.getLatitude()+","+currentLocation.getLongitude()+
                         "&radius=2000" + "&language=ru"+ "&type=" + placeTypeList[i] + "&sensor=true" +
@@ -125,7 +147,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     public void onChanged(List<Place> places) {
                         map.clear();
                         LatLng mlatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                        MarkerOptions mOptions = new MarkerOptions().position(mlatLng).visible(true);
+                        MarkerOptions mOptions = new MarkerOptions().position(mlatLng).title("Вы здесь").visible(true);
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatLng, 13));
                         mOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
                         map.addMarker(mOptions);
@@ -134,16 +156,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             LatLng latLng = new LatLng(places.get(i).getLatitude(), places.get(i).getLongitude());
                             MarkerOptions options = new MarkerOptions();
                             options.position(latLng);
-                            options.title(name);
+                            options.title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
                             markers.put(map.addMarker(options).getId(), i);
                             map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                 @Override
                                 public void onInfoWindowClick(Marker marker) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("place", places.get(markers.get(marker.getId())));
-                                    PlaceCardFragment placeCardFragment = new PlaceCardFragment();
-                                    placeCardFragment.setArguments(bundle);
-                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                                    if (markers.get(marker.getId()) != null) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("place", places.get(markers.get(marker.getId())));
+                                        PlaceCardFragment placeCardFragment = new PlaceCardFragment();
+                                        placeCardFragment.setArguments(bundle);
+                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                                    }
                                 }
                             });
                         }
@@ -175,7 +199,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onSuccess(Location location) {
                 if (location != null){
-                    currentLocation = location;
+                    //currentLocation = location;
                     mapViewModel.setCurrentLocation(currentLocation);
                 }
                 mMapView.getMapAsync(MapFragment.this);
@@ -190,10 +214,73 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         map = googleMap;
         //LatLng latLng = new LatLng(55.751244, 37.618423);
-        MarkerOptions options = new MarkerOptions().position(latLng).visible(true);
+        MarkerOptions options = new MarkerOptions().position(latLng).title("Вы здесь").visible(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
         map.addMarker(options);
+        if (bundle != null) {
+            spType.setSelection(mapViewModel.getSpinner());
+            Place place = (Place) bundle.getSerializable("place");
+            LatLng latLngPlace = new LatLng(place.getLatitude(), place.getLongitude());
+            MarkerOptions optionsPlace = new MarkerOptions();
+            optionsPlace.position(latLngPlace);
+            optionsPlace.title(place.getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));;
+            map.addMarker(optionsPlace);
+            map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("place", place);
+                    PlaceCardFragment placeCardFragment = new PlaceCardFragment();
+                    placeCardFragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                }
+            });
+            String urlRoute = "https://maps.googleapis.com/maps/api/directions/json?origin=" +
+                    + currentLocation.getLatitude() + "," + currentLocation.getLongitude() +
+                    "&destination=" + place.getLatitude() + "," + place.getLongitude() +
+                    "&mode=walking&sensor=true&key=AIzaSyBomRHM2cJo2o33ZULSbZHbisJs4JZQSKE";
+
+            mapViewModel.setUrlRoute(urlRoute);
+            LiveData<List<List<HashMap<String, String>>>> dataRoutes =  mapViewModel.getDataRoutes();
+            dataRoutes.observe(getActivity(), new Observer<List<List<HashMap<String, String>>>>() {
+                @Override
+                public void onChanged(List<List<HashMap<String, String>>> routes) {
+
+                    ArrayList<LatLng> points = null;
+                    PolylineOptions lineOptions = null;
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    // Traversing through all the routes
+                    for(int i = 0; i < routes.size(); i++){
+                        points = new ArrayList<LatLng>();
+                        lineOptions = new PolylineOptions();
+
+                        // Fetching i-th route
+                        List<HashMap<String, String>> path = routes.get(i);
+
+                        // Fetching all the points in i-th route
+                        for(int j = 0; j < path.size(); j++){
+                            HashMap<String,String> point = path.get(j);
+
+                            double lat = Double.parseDouble(point.get("lat"));
+                            double lng = Double.parseDouble(point.get("lng"));
+                            LatLng position = new LatLng(lat, lng);
+
+                            points.add(position);
+                        }
+
+                        // Adding all the points in the route to LineOptions
+                        lineOptions.addAll(points);
+                        lineOptions.width(10);
+
+                        lineOptions.color(Color.DKGRAY);
+                    }
+
+                    map.addPolyline(lineOptions);
+                }
+            });
+        }
     }
 
     @Override

@@ -2,9 +2,6 @@ package com.example.studentmap;
 
 import android.location.Location;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,10 +14,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class ParsePlace {
 
@@ -97,11 +92,42 @@ public class ParsePlace {
 
                     temp.setDistance(mapListDist.get(0).get("distance"));
 
-
                     listPlace.add(temp);
 
                 }
                 callback.response(listPlace);
+            }
+        });
+        executor.shutdown();
+
+    }
+
+    public void ParseRoute(String url) {
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                String routeUrl = null;
+
+                try {
+                    routeUrl = downloadUrl(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                finalData[0] = routeUrl;
+
+                JsonParser jsonParser = new JsonParser();
+                List<List<HashMap<String,String>>> route = null;
+                JSONObject object = null;
+
+                try {
+                    object = new JSONObject(finalData[0]);
+                    route = jsonParser.parse(object);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+                callback.responseRoute(route);
             }
         });
         executor.shutdown();

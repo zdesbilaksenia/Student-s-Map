@@ -1,15 +1,9 @@
 package com.example.studentmap;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,6 +18,29 @@ public class MapViewModel extends AndroidViewModel implements ResponseCallback{
     private Location currentLocation;
     private String url;
     private String lastUrl;
+    private MutableLiveData<List<List<HashMap<String, String>>>> liveDataRoute;
+    private List<List<HashMap<String, String>>> routes;
+    private String urlRoute;
+    private Integer spinner;
+
+    public void setSpinner(int sp) {
+        spinner = sp;
+    }
+
+    public Integer getSpinner() {
+        return spinner;
+    }
+
+    public LiveData<List<List<HashMap<String, String>>>> getDataRoutes() {
+        liveDataRoute = new MutableLiveData<>();
+        loadDataRoutes();
+        return liveDataRoute;
+    }
+
+    private void loadDataRoutes(){
+        ParsePlace parser = new ParsePlace(this);
+        parser.ParseRoute(urlRoute);
+    }
 
     public LiveData<List<Place>> getData(){
         if (liveData == null || lastUrl != url) {
@@ -65,4 +82,18 @@ public class MapViewModel extends AndroidViewModel implements ResponseCallback{
         liveData.postValue(listPlace);
 
     }
+
+    @Override
+    public void responseRoute(List<List<HashMap<String, String>>> route) {
+        routes = route;
+        liveDataRoute.postValue(route);
+    }
+
+    public void setUrlRoute(String url){
+        urlRoute = url;
+    }
+    public String getUrlRoute() {
+        return urlRoute;
+    }
+
 }
