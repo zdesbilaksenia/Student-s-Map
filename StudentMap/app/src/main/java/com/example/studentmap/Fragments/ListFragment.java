@@ -43,12 +43,15 @@ public class ListFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        TextView warning = view.findViewById(R.id.warning);
+
         mapViewModel = new ViewModelProvider((ViewModelStoreOwner) getActivity()).get(MapViewModel.class);
         LiveData<List<Place>> data = mapViewModel.getData();
 
         data.observe((LifecycleOwner) getActivity(), new Observer<List<Place>>() {
             @Override
             public void onChanged(List<Place> places) {
+                warning.setVisibility(view.GONE);
                 final MyAdapter adapter = new MyAdapter(places);
                 recyclerView.setAdapter(adapter);
             }

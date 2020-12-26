@@ -199,7 +199,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onSuccess(Location location) {
                 if (location != null){
-                    //currentLocation = location;
+                    currentLocation = location;
                     mapViewModel.setCurrentLocation(currentLocation);
                 }
                 mMapView.getMapAsync(MapFragment.this);
@@ -274,7 +274,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         lineOptions.addAll(points);
                         lineOptions.width(10);
 
-                        lineOptions.color(Color.DKGRAY);
+                        lineOptions.color(Color.rgb(126, 32, 142));
                     }
 
                     map.addPolyline(lineOptions);

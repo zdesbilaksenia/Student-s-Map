@@ -93,9 +93,14 @@ public class MainActivity extends AppCompatActivity {
         nav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
-
                 }
             });
+        nav.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+
+            }
+        });
 
         myPreferences = getSharedPreferences("mysettings", Context.MODE_PRIVATE);
 

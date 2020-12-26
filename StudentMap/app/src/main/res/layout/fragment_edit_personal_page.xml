@@ -196,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_style"
                 android:layout_gravity="center"
-                android:text="Редактировать"/>
+                android:text="Сохранить"/>
         </LinearLayout>
 
     </LinearLayout>
