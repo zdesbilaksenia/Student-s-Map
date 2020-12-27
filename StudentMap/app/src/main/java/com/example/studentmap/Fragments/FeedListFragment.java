@@ -12,15 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -43,7 +44,6 @@ import com.example.studentmap.RoomDb.RoomViewModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -302,8 +302,27 @@ public class FeedListFragment extends Fragment {
 
 
             Log.d("Rating", Float.toString(post.getRating()));
+            if(holder.read_post != null) {
+                holder.read_post.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ReadPostFragment readPostFragment = new ReadPostFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("img", post.getImg());
+                        bundle.putFloat("rating", post.getRating());
+                        bundle.putString("text", post.getText());
+                        bundle.putString("location", post.getLocation());
 
+                        readPostFragment.setArguments(bundle);
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
+                        ft.replace(R.id.fragmentContainer, readPostFragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                    }
+                });
+
+            }
 
 
 
@@ -379,6 +398,7 @@ public class FeedListFragment extends Fragment {
         public ImageView photo;
         public TextView review;
         RatingBar ratingBar;
+        public Button read_post;
         public feedViewHolder(@NonNull View itemView) {
             super(itemView);
             post = itemView.findViewById(R.id.postContainer);
@@ -387,7 +407,8 @@ public class FeedListFragment extends Fragment {
             place = itemView.findViewById(R.id.place);
             photo = itemView.findViewById(R.id.photo);
             review = itemView.findViewById(R.id.review);
-            ratingBar = itemView.findViewById(R.id.ratingBar1);
+            ratingBar = itemView.findViewById(R.id.ratingBar2);
+            read_post = itemView.findViewById(R.id.button_read_post);
         }
     }
 

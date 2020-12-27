@@ -61,16 +61,17 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="16dp"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="8dp"
         android:gravity="start"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:orientation="horizontal">
 
         <RatingBar
-            android:id="@+id/ratingBar1"
+            android:id="@+id/ratingBar2"
             style="@android:style/Widget.Material.RatingBar.Indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,5 +91,11 @@
             tools:text="rating" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_read_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Читать" />
 
 </LinearLayout>

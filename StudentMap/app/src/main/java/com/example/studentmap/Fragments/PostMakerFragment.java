@@ -113,11 +113,11 @@ public class PostMakerFragment extends Fragment {
         });
 
         View rootView = inflater.inflate(R.layout.fragment_post_maker, container, false);
-        imageView = (ImageView) rootView.findViewById(R.id.imagePerson);
-        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar1);
+        imageView = (ImageView) rootView.findViewById(R.id.imagePost);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar2);
 
         selectImageButton = (Button) rootView.findViewById(R.id.button);
-        addPostButton = (Button) rootView.findViewById(R.id.button2);
+        addPostButton = (Button) rootView.findViewById(R.id.back_button);
         textPost = (EditText) rootView.findViewById(R.id.textPost);
 
 

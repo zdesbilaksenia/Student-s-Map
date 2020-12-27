@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.example.studentmap.Fragments.PlaceCardFragment;
 import com.example.studentmap.MapViewModel;
 import com.example.studentmap.Place;
 import com.example.studentmap.R;
@@ -108,7 +106,7 @@ public class ListFragment extends Fragment {
                 name = itemView.findViewById(R.id.name);
                 address = itemView.findViewById(R.id.address);
                 distance = itemView.findViewById(R.id.distance);
-                ratingBar = itemView.findViewById(R.id.ratingBar1);
+                ratingBar = itemView.findViewById(R.id.ratingBar2);
                 rating = itemView.findViewById(R.id.rating);
             }
 

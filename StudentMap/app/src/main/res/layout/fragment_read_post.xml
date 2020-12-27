@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="55dp"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="55dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/imagePost"
+            android:layout_width="222dp"
+            android:layout_height="221dp"
+            android:layout_marginTop="16dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_launcher_background"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/text_post1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="177dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_style"
+            android:text="Назад" />
+
+    </LinearLayout>
+
+</ScrollView>

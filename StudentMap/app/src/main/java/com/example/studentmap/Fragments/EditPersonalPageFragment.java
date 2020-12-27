@@ -18,12 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.studentmap.FireBase.Firebase;
 import com.example.studentmap.Network.Entity.User;
 import com.example.studentmap.Network.RequestMakerModel;
@@ -108,7 +106,7 @@ public class EditPersonalPageFragment extends Fragment {
         radioGroup = rootView.findViewById(R.id.editRadioGroup);
         password = rootView.findViewById(R.id.edit_password);
         selectImageButton = rootView.findViewById(R.id.change_photo);
-        imagePerson = rootView.findViewById(R.id.imagePerson);
+        imagePerson = rootView.findViewById(R.id.imagePost);
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override

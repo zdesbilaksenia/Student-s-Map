@@ -34,7 +34,7 @@ public class PlaceCardFragment extends Fragment {
         ImageView image = view.findViewById(R.id.image);
         TextView name = view.findViewById(R.id.name);
         TextView address = view.findViewById(R.id.address);
-        RatingBar ratingBar = view.findViewById(R.id.ratingBar1);
+        RatingBar ratingBar = view.findViewById(R.id.ratingBar2);
         TextView rating = view.findViewById(R.id.rating);
         TextView dist = view.findViewById(R.id.dist);
 
