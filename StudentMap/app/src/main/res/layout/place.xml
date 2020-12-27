@@ -16,11 +16,13 @@
 
     <TextView
         android:layout_margin="8dp"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:textColor="@color/purple_500"
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         tools:text="Place" />
 
@@ -30,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:textStyle="normal"
         tools:text="address" />
 
@@ -74,7 +76,8 @@
     <Button
         android:layout_marginTop="16dp"
         android:id="@+id/btn_post"
-        android:layout_width="match_parent"
+        android:clickable="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_style"
         android:text="Создать пост"
@@ -92,7 +95,7 @@
         <Button
             android:layout_marginTop="10dp"
             android:id="@+id/btn_route"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_style"
             android:text="В путь"
