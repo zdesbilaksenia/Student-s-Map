@@ -82,7 +82,7 @@ public class ListFragment extends Fragment {
                     bundle.putSerializable("place", data.get(holder.getAdapterPosition()));
                     PlaceCardFragment placeCardFragment = new PlaceCardFragment();
                     placeCardFragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, placeCardFragment, "PlaceCardFragment").addToBackStack(null).commit();
                 }
             });
         }

@@ -21,6 +21,7 @@ import com.example.studentmap.Fragments.MapFragment;
 import com.example.studentmap.Fragments.PersonalPageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.Console;
 import java.util.ArrayList;
 
 //import kotlin.Unit;
@@ -33,61 +34,31 @@ public class MainActivity extends AppCompatActivity {
     //MeowBottomNavigation bottomNavigation;
     com.etebarian.meowbottomnavigation.MeowBottomNavigation nav;
     SharedPreferences myPreferences;
+    int fragNum = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState!=null) {
+            fragNum = savedInstanceState.getInt("fr");
+        }
         //bottomNavigation = findViewById(R.id.nav);
         nav = findViewById(R.id.btm_nav);
         nav.add(new com.etebarian.meowbottomnavigation.MeowBottomNavigation.Model(1,R.drawable.ic_list_white_48dp));
         nav.add(new com.etebarian.meowbottomnavigation.MeowBottomNavigation.Model(2,R.drawable.ic_map_white_24dp));
         nav.add(new com.etebarian.meowbottomnavigation.MeowBottomNavigation.Model(3,R.drawable.ic_post_list));
         nav.add(new com.etebarian.meowbottomnavigation.MeowBottomNavigation.Model(4,R.drawable.ic_account_circle_white_24dp));
+
+
+
         nav.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
+
                 //Toast.makeText(getApplicationContext(), "Clicked item" + item.getId(), Toast.LENGTH_SHORT).show();
                 int itemId = item.getId();
-                switch (item.getId()) {
-                    case 2:
-                        if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
-                            MapFragment mapFragment = new MapFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").addToBackStack(null).commit();
-                        }else {
-                            Fragment fragment =  getSupportFragmentManager().findFragmentByTag("MapFragment");
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "MapFragment").addToBackStack(null).commit();
-                        }
-                        break;
-                    case 1:
-                        if (getSupportFragmentManager().findFragmentByTag("ListFragment") == null) {
-                            ListFragment listFragment = new ListFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, listFragment, "ListFragment").commit();
-                        }else {
-                            Fragment fragment = getSupportFragmentManager().findFragmentByTag("ListFragment");
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "ListFragment").commit();
-                        }
-                        break;
-                    case 3:
-                        if (getSupportFragmentManager().findFragmentByTag("FeedFragment") == null) {
-                            FeedListFragment feedListFragment = new FeedListFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, feedListFragment, "FeedFragment").commit();
-                        }else {
-                            Fragment fragment =  getSupportFragmentManager().findFragmentByTag("FeedFragment");
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "FeedFragment").addToBackStack(null).commit();
-                        }
-                        break;
-                    case 4:
-                        if (getSupportFragmentManager().findFragmentByTag("Login") == null) {
-                            PersonalPageFragment personalPageFragment = new PersonalPageFragment();
-
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").commit();
-
-                        }else {
-                            Fragment fragment =  getSupportFragmentManager().findFragmentByTag("Login");
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "Login").addToBackStack(null).commit();
-                        }
-                        break;
-                }
+                switchFragment(itemId);
             }});
 
         nav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
@@ -121,9 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
                     MapFragment mapFragment = new MapFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").commit();
-                }else {
+                }else  {
                     Fragment fragment =  getSupportFragmentManager().findFragmentByTag("MapFragment");
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "MapFragment").commit();
+                }
+                if (fragNum != 0) {
+                    switchFragment(fragNum);
                 }
 
             }
@@ -133,6 +107,60 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    void switchFragment(int n) {
+        switch (n) {
+            case 2:
+                if (getSupportFragmentManager().findFragmentByTag("MapFragment") == null) {
+                    MapFragment mapFragment = new MapFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, mapFragment, "MapFragment").addToBackStack(null).commit();
+
+                }else {
+                    Fragment fragment =  getSupportFragmentManager().findFragmentByTag("MapFragment");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "MapFragment").addToBackStack(null).commit();
+                }
+                fragNum=2;
+                break;
+            case 1:
+                if (getSupportFragmentManager().findFragmentByTag("ListFragment") == null) {
+                    ListFragment listFragment = new ListFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, listFragment, "ListFragment").addToBackStack(null).commit();
+                }else {
+                    Fragment fragment = getSupportFragmentManager().findFragmentByTag("ListFragment");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "ListFragment").addToBackStack(null).commit();
+                }
+                fragNum=1;
+                break;
+            case 3:
+                if (getSupportFragmentManager().findFragmentByTag("FeedFragment") == null) {
+                    FeedListFragment feedListFragment = new FeedListFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, feedListFragment, "FeedFragment").addToBackStack(null).commit();
+                }else {
+                    Fragment fragment =  getSupportFragmentManager().findFragmentByTag("FeedFragment");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "FeedFragment").addToBackStack(null).commit();
+                }
+                fragNum=3;
+                break;
+            case 4:
+                if (getSupportFragmentManager().findFragmentByTag("Login") == null) {
+                    PersonalPageFragment personalPageFragment = new PersonalPageFragment();
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, personalPageFragment, "personalPageFragment").addToBackStack(null).commit();
+
+                }else {
+                    Fragment fragment =  getSupportFragmentManager().findFragmentByTag("Login");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "Login").addToBackStack(null).commit();
+                }
+                fragNum=4;
+                break;
+        }
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF="+fragNum);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("fr", fragNum);
+    }
 
 
 }
