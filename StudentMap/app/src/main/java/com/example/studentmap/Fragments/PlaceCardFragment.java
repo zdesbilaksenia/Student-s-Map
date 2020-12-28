@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 public class PlaceCardFragment extends Fragment {
     Button addPostButton;
     Button routeBtn;
+    Button back;
 
     @Nullable
     @Override
@@ -30,6 +31,13 @@ public class PlaceCardFragment extends Fragment {
 
         addPostButton = view.findViewById(R.id.btn_post);
         routeBtn = view.findViewById(R.id.btn_route);
+        back = (Button) view.findViewById(R.id.btn_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToMap();
+            }
+        });
 
         ImageView image = view.findViewById(R.id.image);
         TextView name = view.findViewById(R.id.name);
@@ -84,5 +92,10 @@ public class PlaceCardFragment extends Fragment {
         });
 
         return view;
+    }
+
+    void backToMap(){
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("MapFragment");
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "MapFragment").commit();
     }
 }
